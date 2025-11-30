@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Car {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  brand     String
+  model   String       
+  price     Int
+  year      Int
+  color     String
+  mileage   Int
+  fuel      String
+  transmission String
+  registration String
+  userId    String
+  status    CarProblemStatus @default(OPEN)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  problems Problem[]
+  comments Comment[]
+  images Image[]
+
+  @@index([userId])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  content   String   
+  carId     String
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
+}
+
+model User {
+  id           String    @id @default(cuid())
+  username     String    @unique
+  email        String    @unique
+  passwordHash String
+  session      Session[]
+  car          Car[]
+  comments     Comment[]
+  problems     Problem[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@index([userId])
+}
+
+enum CarProblemStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  content   String   
+  carId     String
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  status    CarProblemStatus @default(OPEN)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  images CommentImage[]
+
+  @@index([userId])
+}
+
+model Problem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  content   String    
+  carId     String
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  status    CarProblemStatus @default(OPEN)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  images ProblemImage[]
+
+  @@index([userId])
+}
+
+model ProblemImage {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  content   String   
+  problemId String
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@index([problemId])
+}
+
+model CommentImage {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  content   String   
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@index([commentId])
+}
