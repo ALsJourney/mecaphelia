@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.0.1",
-  "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
+  "clientVersion": "7.1.0",
+  "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
   "activeProvider": "sqlite",
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Car {\n  id           String           @id @default(cuid())\n  createdAt    DateTime         @default(now())\n  updatedAt    DateTime         @updatedAt\n  brand        String\n  model        String\n  price        Int\n  year         Int\n  color        String\n  mileage      Int\n  fuel         String\n  transmission String\n  registration String\n  userId       String\n  status       CarProblemStatus @default(OPEN)\n  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  problems Problem[]\n  comments Comment[]\n  images   Image[]\n\n  @@index([userId])\n}\n\nmodel Image {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  carId     String\n  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)\n\n  @@index([carId])\n}\n\nmodel User {\n  id           String    @id @default(cuid())\n  username     String    @unique\n  email        String    @unique\n  passwordHash String\n  session      Session[]\n  car          Car[]\n  comments     Comment[]\n  problems     Problem[]\n}\n\nmodel Session {\n  id        String   @id @default(cuid())\n  expiresAt DateTime\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n\n  @@index([userId])\n}\n\nenum CarProblemStatus {\n  OPEN\n  IN_PROGRESS\n  DONE\n}\n\nmodel Comment {\n  id        String           @id @default(cuid())\n  createdAt DateTime         @default(now())\n  updatedAt DateTime         @default(now())\n  content   String\n  carId     String\n  car       Car              @relation(fields: [carId], references: [id], onDelete: Cascade)\n  status    CarProblemStatus @default(OPEN)\n  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n  images    CommentImage[]\n\n  @@index([userId])\n}\n\nmodel Problem {\n  id        String           @id @default(cuid())\n  createdAt DateTime         @default(now())\n  updatedAt DateTime         @default(now())\n  content   String\n  carId     String\n  car       Car              @relation(fields: [carId], references: [id], onDelete: Cascade)\n  status    CarProblemStatus @default(OPEN)\n  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n  images    ProblemImage[]\n\n  @@index([userId])\n}\n\nmodel ProblemImage {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  problemId String\n  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@index([problemId])\n}\n\nmodel CommentImage {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  commentId String\n  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)\n\n  @@index([commentId])\n}\n",
   "runtimeDataModel": {
@@ -62,7 +62,7 @@ export interface PrismaClientConstructor {
    * const cars = await prisma.car.findMany()
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   new <
@@ -84,7 +84,7 @@ export interface PrismaClientConstructor {
  * const cars = await prisma.car.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 
 export interface PrismaClient<
@@ -113,7 +113,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -125,7 +125,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -136,7 +136,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -148,7 +148,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
