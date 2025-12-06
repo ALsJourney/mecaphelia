@@ -46,7 +46,7 @@ animate-header-from-top supports-backdrop-blur:bg-background/60 fixed left-0 rig
           className={buttonVariants({ variant: "ghost" })}
         >
           <LucideKanban />
-          <h1>TicketBounty</h1>
+          <h1>mecaphelia</h1>
         </Link>
       </div>
       <div className="flex align-items gap-x-2">
