@@ -96,7 +96,8 @@ export const UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
   email: 'email',
-  passwordHash: 'passwordHash'
+  passwordHash: 'passwordHash',
+  openrouterApiKey: 'openrouterApiKey'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -119,6 +120,8 @@ export const ProblemScalarFieldEnum = {
   description: 'description',
   status: 'status',
   severity: 'severity',
+  aiSeverity: 'aiSeverity',
+  severitySource: 'severitySource',
   estimatedCost: 'estimatedCost',
   aiAnalysis: 'aiAnalysis',
   carId: 'carId',

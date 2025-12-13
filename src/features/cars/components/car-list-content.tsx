@@ -39,7 +39,7 @@ export function CarListContent({ cars }: CarListContentProps) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto w-full">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-3xl font-bold">Fahrzeuge</h2>

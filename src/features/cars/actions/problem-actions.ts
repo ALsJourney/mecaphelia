@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { getAuth } from "@/features/auth/queries/get-auth";
-import { ProblemStatus, ProblemSeverity } from "../types";
-import { analyzeCarProblem } from "../services/gemini-service";
+import { ProblemStatus, ProblemSeverity, SeveritySource } from "../types";
+import { analyzeCarProblem } from "../services/openrouter-service";
 
 export async function createProblem(
   carId: string,
@@ -47,6 +47,8 @@ export async function createProblem(
       description: data.description,
       status: ProblemStatus.OPEN,
       severity: aiResult.severity,
+      aiSeverity: aiResult.severity,
+      severitySource: SeveritySource.AI,
       estimatedCost: aiResult.estimatedCost,
       aiAnalysis: aiResult.analysis || null,
       carId,
@@ -57,6 +59,82 @@ export async function createProblem(
   revalidatePath(`/cars/${carId}`);
   revalidatePath("/dashboard");
   return problem;
+}
+
+export async function reanalyzeProblem(problemId: string) {
+  const { user } = await getAuth();
+  if (!user) throw new Error("Nicht authentifiziert");
+
+  const problem = await prisma.problem.findFirst({
+    where: { id: problemId, userId: user.id },
+    include: { car: true },
+  });
+
+  if (!problem) throw new Error("Problem nicht gefunden");
+
+  const aiResult = await analyzeCarProblem(
+    {
+      make: problem.car.make,
+      model: problem.car.model,
+      year: problem.car.year,
+      currentMileage: problem.car.currentMileage,
+    },
+    problem.description
+  );
+
+  const updated = await prisma.problem.update({
+    where: { id: problemId },
+    data: {
+      aiAnalysis: aiResult.analysis || null,
+      estimatedCost: aiResult.estimatedCost,
+      aiSeverity: aiResult.severity,
+      ...(problem.severitySource === SeveritySource.AI
+        ? { severity: aiResult.severity }
+        : {}),
+    },
+  });
+
+  revalidatePath(`/cars/${problem.carId}`);
+  revalidatePath("/dashboard");
+  return updated;
+}
+
+export async function updateProblem(
+  problemId: string,
+  data: {
+    title: string;
+    description: string;
+    status?: ProblemStatus;
+    severity?: ProblemSeverity;
+  }
+) {
+  const { user } = await getAuth();
+  if (!user) throw new Error("Nicht authentifiziert");
+
+  const problem = await prisma.problem.findFirst({
+    where: { id: problemId, userId: user.id },
+  });
+
+  if (!problem) throw new Error("Problem nicht gefunden");
+
+  const updated = await prisma.problem.update({
+    where: { id: problemId },
+    data: {
+      title: data.title,
+      description: data.description,
+      ...(data.status ? { status: data.status } : {}),
+      ...(data.severity
+        ? {
+            severity: data.severity,
+            severitySource: SeveritySource.USER,
+          }
+        : {}),
+    },
+  });
+
+  revalidatePath(`/cars/${problem.carId}`);
+  revalidatePath("/dashboard");
+  return updated;
 }
 
 export async function updateProblemStatus(problemId: string, status: ProblemStatus) {

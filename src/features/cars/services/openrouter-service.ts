@@ -32,7 +32,7 @@ export async function analyzeCarProblem(
   const apiKey =
     (user as unknown as UserWithOpenrouterApiKey | null)?.openrouterApiKey ??
     process.env.OPENROUTER_API_KEY;
-  
+
   if (!apiKey) {
     return {
       analysis: "API Key fehlt. Openrouter KI-Analyse nicht möglich.",
@@ -63,7 +63,8 @@ export async function analyzeCarProblem(
         messages: [
           {
             role: "system",
-            content: "Du bist ein erfahrener KFZ-Mechaniker KI-Assistent. Antworte exakt im JSON-Format.",
+            content:
+              "Du bist ein erfahrener KFZ-Mechaniker KI-Assistent. Antworte exakt im JSON-Format.",
           },
           {
             role: "user",
@@ -83,13 +84,13 @@ export async function analyzeCarProblem(
 
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content;
-    
+
     if (!text) {
       throw new Error("Keine Antwort erhalten");
     }
 
     const parsed = JSON.parse(stripCodeFences(text));
-    
+
     const severityMap: Record<string, ProblemSeverity> = {
       low: ProblemSeverity.LOW,
       medium: ProblemSeverity.MEDIUM,
@@ -123,7 +124,7 @@ export async function suggestMaintenance(
   const apiKey =
     (user as unknown as UserWithOpenrouterApiKey | null)?.openrouterApiKey ??
     process.env.OPENROUTER_API_KEY;
-  
+
   if (!apiKey) {
     return "API Key fehlt.";
   }
@@ -163,7 +164,9 @@ export async function suggestMaintenance(
     }
 
     const data = await response.json();
-    return data.choices?.[0]?.message?.content || "Keine Informationen verfügbar.";
+    return (
+      data.choices?.[0]?.message?.content || "Keine Informationen verfügbar."
+    );
   } catch (error) {
     console.error("Openrouter Error:", error);
     return "Fehler beim Abrufen der Wartungsinformationen.";

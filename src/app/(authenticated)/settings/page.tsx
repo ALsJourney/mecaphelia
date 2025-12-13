@@ -2,6 +2,11 @@ import { redirect } from "next/navigation";
 
 import { getAuth } from "@/features/auth/queries/get-auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { OpenrouterApiKeyForm } from "./openrouter-api-key-form";
+
+type UserWithOpenrouterApiKey = {
+  openrouterApiKey?: string | null;
+};
 
 export default async function SettingsPage() {
   const { user } = await getAuth();
@@ -11,7 +16,7 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-2xl mx-auto">
       <h2 className="text-3xl font-bold mb-4">Einstellungen</h2>
       <p className="text-muted-foreground mb-8">Mecaphelia Version 1.0.0</p>
       
@@ -22,8 +27,22 @@ export default async function SettingsPage() {
         <CardContent className="text-muted-foreground">
           <p>
             Alle Daten werden sicher in der Datenbank gespeichert und sind nur für dich zugänglich.
-            Die KI-Analyse verwendet die Google Gemini API.
+            Die KI-Analyse verwendet die Openrouter API.
           </p>
+        </CardContent>
+      </Card>
+
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle>Openrouter</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <OpenrouterApiKeyForm
+            defaultValue={
+              (user as unknown as UserWithOpenrouterApiKey | null)
+                ?.openrouterApiKey
+            }
+          />
         </CardContent>
       </Card>
 

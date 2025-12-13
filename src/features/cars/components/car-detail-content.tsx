@@ -15,7 +15,6 @@ import {
   Clock,
   Save,
   BrainCircuit,
-  X,
   Pencil,
   Trash2,
   Eye,
@@ -45,13 +44,22 @@ import {
 } from "@/components/ui/select";
 
 import { updateCar } from "../actions/car-actions";
-import { createProblem, toggleProblemStatus } from "../actions/problem-actions";
+import {
+  createProblem,
+  deleteProblem,
+  reanalyzeProblem,
+  toggleProblemStatus,
+  updateProblem,
+} from "../actions/problem-actions";
 import { createExpense, deleteExpense } from "../actions/expense-actions";
 import { createDocument, deleteDocument } from "../actions/document-actions";
 import {
   CarWithRelations,
+  Problem,
+  ProblemSeverity,
   ProblemStatus,
   ProblemStatusLabels,
+  SeveritySource,
   ExpenseType,
   ExpenseTypeLabels,
 } from "../types";
@@ -67,6 +75,34 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
   const [showAddProblem, setShowAddProblem] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [reanalyzingProblemId, setReanalyzingProblemId] = useState<string | null>(
+    null
+  );
+
+  const [problemStatusFilter, setProblemStatusFilter] = useState<
+    ProblemStatus | "ALL"
+  >("ALL");
+
+  const [isEditingProblem, setIsEditingProblem] = useState(false);
+  const [editingProblemId, setEditingProblemId] = useState<string | null>(null);
+  const [editingProblemOriginalSeverity, setEditingProblemOriginalSeverity] =
+    useState<ProblemSeverity | null>(null);
+  const [editingProblemAiSeverity, setEditingProblemAiSeverity] = useState<
+    ProblemSeverity | null
+  >(null);
+  const [editingProblemSeveritySource, setEditingProblemSeveritySource] =
+    useState<SeveritySource | null>(null);
+  const [problemEditForm, setProblemEditForm] = useState<{
+    title: string;
+    description: string;
+    status: ProblemStatus;
+    severity: ProblemSeverity;
+  }>({
+    title: "",
+    description: "",
+    status: ProblemStatus.OPEN,
+    severity: ProblemSeverity.MEDIUM,
+  });
 
   const [editForm, setEditForm] = useState({
     make: car.make,
@@ -131,6 +167,69 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
   const handleToggleProblemStatus = (problemId: string) => {
     startTransition(async () => {
       await toggleProblemStatus(problemId);
+      router.refresh();
+    });
+  };
+
+  const handleReanalyzeProblem = (problemId: string) => {
+    setReanalyzingProblemId(problemId);
+    startTransition(async () => {
+      try {
+        await reanalyzeProblem(problemId);
+      } finally {
+        setReanalyzingProblemId(null);
+        router.refresh();
+      }
+    });
+  };
+
+  const openEditProblem = (problem: Problem) => {
+    setEditingProblemId(problem.id);
+    setEditingProblemOriginalSeverity(problem.severity);
+    setEditingProblemAiSeverity(problem.aiSeverity);
+    setEditingProblemSeveritySource(problem.severitySource);
+    setProblemEditForm({
+      title: problem.title,
+      description: problem.description,
+      status: problem.status,
+      severity: problem.severity,
+    });
+    setIsEditingProblem(true);
+  };
+
+  const handleSaveProblemEdits = () => {
+    if (!editingProblemId) return;
+
+    const severityToSave =
+      editingProblemOriginalSeverity &&
+      problemEditForm.severity !== editingProblemOriginalSeverity
+        ? problemEditForm.severity
+        : undefined;
+
+    startTransition(async () => {
+      await updateProblem(editingProblemId, {
+        title: problemEditForm.title,
+        description: problemEditForm.description,
+        status: problemEditForm.status,
+        ...(severityToSave ? { severity: severityToSave } : {}),
+      });
+      setIsEditingProblem(false);
+      setEditingProblemId(null);
+      setEditingProblemOriginalSeverity(null);
+      setEditingProblemAiSeverity(null);
+      setEditingProblemSeveritySource(null);
+      router.refresh();
+    });
+  };
+
+  const handleDeleteProblem = (problemId: string) => {
+    const confirmed = window.confirm(
+      "Willst du dieses Ticket wirklich löschen?"
+    );
+    if (!confirmed) return;
+
+    startTransition(async () => {
+      await deleteProblem(problemId);
       router.refresh();
     });
   };
@@ -228,6 +327,10 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
 
   const totalInvested =
     car.purchasePrice + car.expenses.reduce((s, e) => s + e.amount, 0);
+
+  const filteredProblems = car.problems.filter((p) =>
+    problemStatusFilter === "ALL" ? true : p.status === problemStatusFilter
+  );
 
   return (
     <div className="flex flex-col px-32">
@@ -335,6 +438,121 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
         </DialogContent>
       </Dialog>
 
+      <Dialog
+        open={isEditingProblem}
+        onOpenChange={(open) => {
+          setIsEditingProblem(open);
+          if (!open) {
+            setEditingProblemId(null);
+            setEditingProblemOriginalSeverity(null);
+            setEditingProblemAiSeverity(null);
+            setEditingProblemSeveritySource(null);
+          }
+        }}
+      >
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Ticket bearbeiten</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>Titel</Label>
+              <Input
+                value={problemEditForm.title}
+                onChange={(e) =>
+                  setProblemEditForm({
+                    ...problemEditForm,
+                    title: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div>
+              <Label>Beschreibung</Label>
+              <Textarea
+                value={problemEditForm.description}
+                onChange={(e) =>
+                  setProblemEditForm({
+                    ...problemEditForm,
+                    description: e.target.value,
+                  })
+                }
+                rows={4}
+              />
+            </div>
+            <div>
+              <Label>Status</Label>
+              <Select
+                value={problemEditForm.status}
+                onValueChange={(v) =>
+                  setProblemEditForm({
+                    ...problemEditForm,
+                    status: v as ProblemStatus,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(ProblemStatus).map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {ProblemStatusLabels[s]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label>Schweregrad</Label>
+              <Select
+                value={problemEditForm.severity}
+                onValueChange={(v) =>
+                  setProblemEditForm({
+                    ...problemEditForm,
+                    severity: v as ProblemSeverity,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(ProblemSeverity).map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {editingProblemSeveritySource && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {editingProblemSeveritySource === SeveritySource.AI
+                    ? "Schweregrad wurde von der KI bestimmt."
+                    : "Schweregrad wurde manuell gesetzt."}
+                  {editingProblemSeveritySource === SeveritySource.USER &&
+                    editingProblemAiSeverity &&
+                    ` (KI-Vorschlag: ${editingProblemAiSeverity})`}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              variant="ghost"
+              onClick={() => setIsEditingProblem(false)}
+            >
+              Abbrechen
+            </Button>
+            <Button onClick={handleSaveProblemEdits} disabled={isPending}>
+              Speichern
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <div className="border-b pb-6 mb-6 flex justify-between items-start">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" onClick={() => router.push("/cars")}>
@@ -399,7 +617,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
             Investiert (Gesamt)
           </p>
           <p className="text-xl font-mono font-bold">
-            €{(totalInvested / 100).toLocaleString()}
+            {(totalInvested / 100).toLocaleString()}€
           </p>
         </div>
       </div>
@@ -414,9 +632,30 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
         <TabsContent value="problems" className="space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-bold">Aktuelle Tickets</h3>
-            <Button onClick={() => setShowAddProblem(true)}>
-              <Plus className="mr-2 h-4 w-4" /> Neues Problem
-            </Button>
+            <div className="flex items-center gap-3">
+              <Select
+                value={problemStatusFilter}
+                onValueChange={(v) =>
+                  setProblemStatusFilter(v as ProblemStatus | "ALL")
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALL">Alle Status</SelectItem>
+                  {Object.values(ProblemStatus).map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {ProblemStatusLabels[s]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Button onClick={() => setShowAddProblem(true)}>
+                <Plus className="mr-2 h-4 w-4" /> Neues Problem
+              </Button>
+            </div>
           </div>
 
           {showAddProblem && (
@@ -471,7 +710,14 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                 Keine Probleme gemeldet. Gute Fahrt!
               </p>
             )}
-            {car.problems.map((problem) => (
+
+            {car.problems.length > 0 && filteredProblems.length === 0 && (
+              <p className="text-muted-foreground text-center py-12">
+                Keine Tickets für diesen Status.
+              </p>
+            )}
+
+            {filteredProblems.map((problem) => (
               <Card key={problem.id}>
                 <CardContent className="p-5 flex flex-col md:flex-row gap-6">
                   <div className="flex-1 space-y-3">
@@ -497,6 +743,12 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                       >
                         {problem.severity}
                       </span>
+
+                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                        {problem.severitySource === SeveritySource.AI
+                          ? "KI"
+                          : "MANUELL"}
+                      </span>
                     </div>
 
                     <p className="text-sm text-muted-foreground">
@@ -511,6 +763,11 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                         <p className="text-xs leading-relaxed">
                           {problem.aiAnalysis}
                         </p>
+                        {problem.aiSeverity && (
+                          <p className="mt-2 text-xs font-mono text-muted-foreground">
+                            KI-Schweregrad: {problem.aiSeverity}
+                          </p>
+                        )}
                         {problem.estimatedCost && problem.estimatedCost > 0 && (
                           <p className="mt-2 text-xs font-mono text-muted-foreground">
                             Geschätzte Kosten: ~€{problem.estimatedCost}
@@ -523,6 +780,41 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                   <div className="flex md:flex-col justify-between items-end min-w-[140px] gap-2 border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-6">
                     <div className="text-xs text-muted-foreground text-right">
                       {new Date(problem.createdAt).toLocaleDateString("de-DE")}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleReanalyzeProblem(problem.id)}
+                        className="text-muted-foreground hover:text-purple-500 transition-colors"
+                        disabled={
+                          isPending || reanalyzingProblemId === problem.id
+                        }
+                        title="KI-Analyse neu starten"
+                      >
+                        <BrainCircuit
+                          className={`h-4 w-4 ${
+                            reanalyzingProblemId === problem.id
+                              ? "animate-pulse"
+                              : ""
+                          }`}
+                        />
+                      </button>
+                      <button
+                        onClick={() => openEditProblem(problem)}
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        disabled={isPending}
+                        title="Bearbeiten"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProblem(problem.id)}
+                        className="text-muted-foreground hover:text-destructive transition-colors"
+                        disabled={isPending}
+                        title="Löschen"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </div>
 
                     <Button

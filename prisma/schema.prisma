@@ -42,6 +42,7 @@ model User {
   username     String    @unique
   email        String    @unique
   passwordHash String
+  openrouterApiKey String?
   session      Session[]
   cars         Car[]
   problems     Problem[]
@@ -71,6 +72,11 @@ enum ProblemSeverity {
   CRITICAL
 }
 
+ enum SeveritySource {
+  AI
+  USER
+ }
+
 enum ExpenseType {
   PURCHASE
   MAINTENANCE
@@ -88,6 +94,8 @@ model Problem {
   description   String
   status        ProblemStatus   @default(OPEN)
   severity      ProblemSeverity @default(MEDIUM)
+  aiSeverity    ProblemSeverity?
+  severitySource SeveritySource @default(AI)
   estimatedCost Int?
   aiAnalysis    String?
   carId         String

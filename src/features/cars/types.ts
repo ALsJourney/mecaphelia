@@ -15,6 +15,13 @@ export const ProblemSeverity = {
 
 export type ProblemSeverity = (typeof ProblemSeverity)[keyof typeof ProblemSeverity];
 
+export const SeveritySource = {
+  AI: "AI",
+  USER: "USER",
+} as const;
+
+export type SeveritySource = (typeof SeveritySource)[keyof typeof SeveritySource];
+
 export const ExpenseType = {
   PURCHASE: "PURCHASE",
   MAINTENANCE: "MAINTENANCE",
@@ -34,6 +41,8 @@ export interface Problem {
   description: string;
   status: ProblemStatus;
   severity: ProblemSeverity;
+  aiSeverity: ProblemSeverity | null;
+  severitySource: SeveritySource;
   estimatedCost: number | null;
   aiAnalysis: string | null;
   carId: string;

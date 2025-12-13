@@ -42,6 +42,8 @@ export type ProblemMinAggregateOutputType = {
   description: string | null
   status: $Enums.ProblemStatus | null
   severity: $Enums.ProblemSeverity | null
+  aiSeverity: $Enums.ProblemSeverity | null
+  severitySource: $Enums.SeveritySource | null
   estimatedCost: number | null
   aiAnalysis: string | null
   carId: string | null
@@ -56,6 +58,8 @@ export type ProblemMaxAggregateOutputType = {
   description: string | null
   status: $Enums.ProblemStatus | null
   severity: $Enums.ProblemSeverity | null
+  aiSeverity: $Enums.ProblemSeverity | null
+  severitySource: $Enums.SeveritySource | null
   estimatedCost: number | null
   aiAnalysis: string | null
   carId: string | null
@@ -70,6 +74,8 @@ export type ProblemCountAggregateOutputType = {
   description: number
   status: number
   severity: number
+  aiSeverity: number
+  severitySource: number
   estimatedCost: number
   aiAnalysis: number
   carId: number
@@ -94,6 +100,8 @@ export type ProblemMinAggregateInputType = {
   description?: true
   status?: true
   severity?: true
+  aiSeverity?: true
+  severitySource?: true
   estimatedCost?: true
   aiAnalysis?: true
   carId?: true
@@ -108,6 +116,8 @@ export type ProblemMaxAggregateInputType = {
   description?: true
   status?: true
   severity?: true
+  aiSeverity?: true
+  severitySource?: true
   estimatedCost?: true
   aiAnalysis?: true
   carId?: true
@@ -122,6 +132,8 @@ export type ProblemCountAggregateInputType = {
   description?: true
   status?: true
   severity?: true
+  aiSeverity?: true
+  severitySource?: true
   estimatedCost?: true
   aiAnalysis?: true
   carId?: true
@@ -223,6 +235,8 @@ export type ProblemGroupByOutputType = {
   description: string
   status: $Enums.ProblemStatus
   severity: $Enums.ProblemSeverity
+  aiSeverity: $Enums.ProblemSeverity | null
+  severitySource: $Enums.SeveritySource
   estimatedCost: number | null
   aiAnalysis: string | null
   carId: string
@@ -260,6 +274,8 @@ export type ProblemWhereInput = {
   description?: Prisma.StringFilter<"Problem"> | string
   status?: Prisma.EnumProblemStatusFilter<"Problem"> | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFilter<"Problem"> | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.EnumProblemSeverityNullableFilter<"Problem"> | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFilter<"Problem"> | $Enums.SeveritySource
   estimatedCost?: Prisma.IntNullableFilter<"Problem"> | number | null
   aiAnalysis?: Prisma.StringNullableFilter<"Problem"> | string | null
   carId?: Prisma.StringFilter<"Problem"> | string
@@ -276,6 +292,8 @@ export type ProblemOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   severity?: Prisma.SortOrder
+  aiSeverity?: Prisma.SortOrderInput | Prisma.SortOrder
+  severitySource?: Prisma.SortOrder
   estimatedCost?: Prisma.SortOrderInput | Prisma.SortOrder
   aiAnalysis?: Prisma.SortOrderInput | Prisma.SortOrder
   carId?: Prisma.SortOrder
@@ -295,6 +313,8 @@ export type ProblemWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Problem"> | string
   status?: Prisma.EnumProblemStatusFilter<"Problem"> | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFilter<"Problem"> | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.EnumProblemSeverityNullableFilter<"Problem"> | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFilter<"Problem"> | $Enums.SeveritySource
   estimatedCost?: Prisma.IntNullableFilter<"Problem"> | number | null
   aiAnalysis?: Prisma.StringNullableFilter<"Problem"> | string | null
   carId?: Prisma.StringFilter<"Problem"> | string
@@ -311,6 +331,8 @@ export type ProblemOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   severity?: Prisma.SortOrder
+  aiSeverity?: Prisma.SortOrderInput | Prisma.SortOrder
+  severitySource?: Prisma.SortOrder
   estimatedCost?: Prisma.SortOrderInput | Prisma.SortOrder
   aiAnalysis?: Prisma.SortOrderInput | Prisma.SortOrder
   carId?: Prisma.SortOrder
@@ -333,6 +355,8 @@ export type ProblemScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"Problem"> | string
   status?: Prisma.EnumProblemStatusWithAggregatesFilter<"Problem"> | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityWithAggregatesFilter<"Problem"> | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.EnumProblemSeverityNullableWithAggregatesFilter<"Problem"> | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceWithAggregatesFilter<"Problem"> | $Enums.SeveritySource
   estimatedCost?: Prisma.IntNullableWithAggregatesFilter<"Problem"> | number | null
   aiAnalysis?: Prisma.StringNullableWithAggregatesFilter<"Problem"> | string | null
   carId?: Prisma.StringWithAggregatesFilter<"Problem"> | string
@@ -347,6 +371,8 @@ export type ProblemCreateInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   car: Prisma.CarCreateNestedOneWithoutProblemsInput
@@ -361,6 +387,8 @@ export type ProblemUncheckedCreateInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   carId: string
@@ -375,6 +403,8 @@ export type ProblemUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   car?: Prisma.CarUpdateOneRequiredWithoutProblemsNestedInput
@@ -389,6 +419,8 @@ export type ProblemUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   carId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -403,6 +435,8 @@ export type ProblemCreateManyInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   carId: string
@@ -417,6 +451,8 @@ export type ProblemUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -429,6 +465,8 @@ export type ProblemUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   carId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -453,6 +491,8 @@ export type ProblemCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   severity?: Prisma.SortOrder
+  aiSeverity?: Prisma.SortOrder
+  severitySource?: Prisma.SortOrder
   estimatedCost?: Prisma.SortOrder
   aiAnalysis?: Prisma.SortOrder
   carId?: Prisma.SortOrder
@@ -471,6 +511,8 @@ export type ProblemMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   severity?: Prisma.SortOrder
+  aiSeverity?: Prisma.SortOrder
+  severitySource?: Prisma.SortOrder
   estimatedCost?: Prisma.SortOrder
   aiAnalysis?: Prisma.SortOrder
   carId?: Prisma.SortOrder
@@ -485,6 +527,8 @@ export type ProblemMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   severity?: Prisma.SortOrder
+  aiSeverity?: Prisma.SortOrder
+  severitySource?: Prisma.SortOrder
   estimatedCost?: Prisma.SortOrder
   aiAnalysis?: Prisma.SortOrder
   carId?: Prisma.SortOrder
@@ -587,6 +631,14 @@ export type EnumProblemSeverityFieldUpdateOperationsInput = {
   set?: $Enums.ProblemSeverity
 }
 
+export type NullableEnumProblemSeverityFieldUpdateOperationsInput = {
+  set?: $Enums.ProblemSeverity | null
+}
+
+export type EnumSeveritySourceFieldUpdateOperationsInput = {
+  set?: $Enums.SeveritySource
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -603,6 +655,8 @@ export type ProblemCreateWithoutCarInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   user: Prisma.UserCreateNestedOneWithoutProblemsInput
@@ -616,6 +670,8 @@ export type ProblemUncheckedCreateWithoutCarInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   userId: string
@@ -657,6 +713,8 @@ export type ProblemScalarWhereInput = {
   description?: Prisma.StringFilter<"Problem"> | string
   status?: Prisma.EnumProblemStatusFilter<"Problem"> | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFilter<"Problem"> | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.EnumProblemSeverityNullableFilter<"Problem"> | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFilter<"Problem"> | $Enums.SeveritySource
   estimatedCost?: Prisma.IntNullableFilter<"Problem"> | number | null
   aiAnalysis?: Prisma.StringNullableFilter<"Problem"> | string | null
   carId?: Prisma.StringFilter<"Problem"> | string
@@ -671,6 +729,8 @@ export type ProblemCreateWithoutUserInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   car: Prisma.CarCreateNestedOneWithoutProblemsInput
@@ -684,6 +744,8 @@ export type ProblemUncheckedCreateWithoutUserInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   carId: string
@@ -722,6 +784,8 @@ export type ProblemCreateManyCarInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   userId: string
@@ -735,6 +799,8 @@ export type ProblemUpdateWithoutCarInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutProblemsNestedInput
@@ -748,6 +814,8 @@ export type ProblemUncheckedUpdateWithoutCarInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -761,6 +829,8 @@ export type ProblemUncheckedUpdateManyWithoutCarInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -774,6 +844,8 @@ export type ProblemCreateManyUserInput = {
   description: string
   status?: $Enums.ProblemStatus
   severity?: $Enums.ProblemSeverity
+  aiSeverity?: $Enums.ProblemSeverity | null
+  severitySource?: $Enums.SeveritySource
   estimatedCost?: number | null
   aiAnalysis?: string | null
   carId: string
@@ -787,6 +859,8 @@ export type ProblemUpdateWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   car?: Prisma.CarUpdateOneRequiredWithoutProblemsNestedInput
@@ -800,6 +874,8 @@ export type ProblemUncheckedUpdateWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   carId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -813,6 +889,8 @@ export type ProblemUncheckedUpdateManyWithoutUserInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumProblemStatusFieldUpdateOperationsInput | $Enums.ProblemStatus
   severity?: Prisma.EnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity
+  aiSeverity?: Prisma.NullableEnumProblemSeverityFieldUpdateOperationsInput | $Enums.ProblemSeverity | null
+  severitySource?: Prisma.EnumSeveritySourceFieldUpdateOperationsInput | $Enums.SeveritySource
   estimatedCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiAnalysis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   carId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -828,6 +906,8 @@ export type ProblemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   description?: boolean
   status?: boolean
   severity?: boolean
+  aiSeverity?: boolean
+  severitySource?: boolean
   estimatedCost?: boolean
   aiAnalysis?: boolean
   carId?: boolean
@@ -844,6 +924,8 @@ export type ProblemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   description?: boolean
   status?: boolean
   severity?: boolean
+  aiSeverity?: boolean
+  severitySource?: boolean
   estimatedCost?: boolean
   aiAnalysis?: boolean
   carId?: boolean
@@ -860,6 +942,8 @@ export type ProblemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   description?: boolean
   status?: boolean
   severity?: boolean
+  aiSeverity?: boolean
+  severitySource?: boolean
   estimatedCost?: boolean
   aiAnalysis?: boolean
   carId?: boolean
@@ -876,13 +960,15 @@ export type ProblemSelectScalar = {
   description?: boolean
   status?: boolean
   severity?: boolean
+  aiSeverity?: boolean
+  severitySource?: boolean
   estimatedCost?: boolean
   aiAnalysis?: boolean
   carId?: boolean
   userId?: boolean
 }
 
-export type ProblemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "title" | "description" | "status" | "severity" | "estimatedCost" | "aiAnalysis" | "carId" | "userId", ExtArgs["result"]["problem"]>
+export type ProblemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "title" | "description" | "status" | "severity" | "aiSeverity" | "severitySource" | "estimatedCost" | "aiAnalysis" | "carId" | "userId", ExtArgs["result"]["problem"]>
 export type ProblemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -910,6 +996,8 @@ export type $ProblemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     description: string
     status: $Enums.ProblemStatus
     severity: $Enums.ProblemSeverity
+    aiSeverity: $Enums.ProblemSeverity | null
+    severitySource: $Enums.SeveritySource
     estimatedCost: number | null
     aiAnalysis: string | null
     carId: string
@@ -1346,6 +1434,8 @@ export interface ProblemFieldRefs {
   readonly description: Prisma.FieldRef<"Problem", 'String'>
   readonly status: Prisma.FieldRef<"Problem", 'ProblemStatus'>
   readonly severity: Prisma.FieldRef<"Problem", 'ProblemSeverity'>
+  readonly aiSeverity: Prisma.FieldRef<"Problem", 'ProblemSeverity'>
+  readonly severitySource: Prisma.FieldRef<"Problem", 'SeveritySource'>
   readonly estimatedCost: Prisma.FieldRef<"Problem", 'Int'>
   readonly aiAnalysis: Prisma.FieldRef<"Problem", 'String'>
   readonly carId: Prisma.FieldRef<"Problem", 'String'>

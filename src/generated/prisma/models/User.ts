@@ -29,6 +29,7 @@ export type UserMinAggregateOutputType = {
   username: string | null
   email: string | null
   passwordHash: string | null
+  openrouterApiKey: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -36,6 +37,7 @@ export type UserMaxAggregateOutputType = {
   username: string | null
   email: string | null
   passwordHash: string | null
+  openrouterApiKey: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -43,6 +45,7 @@ export type UserCountAggregateOutputType = {
   username: number
   email: number
   passwordHash: number
+  openrouterApiKey: number
   _all: number
 }
 
@@ -52,6 +55,7 @@ export type UserMinAggregateInputType = {
   username?: true
   email?: true
   passwordHash?: true
+  openrouterApiKey?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -59,6 +63,7 @@ export type UserMaxAggregateInputType = {
   username?: true
   email?: true
   passwordHash?: true
+  openrouterApiKey?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -66,6 +71,7 @@ export type UserCountAggregateInputType = {
   username?: true
   email?: true
   passwordHash?: true
+  openrouterApiKey?: true
   _all?: true
 }
 
@@ -146,6 +152,7 @@ export type UserGroupByOutputType = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -174,6 +181,7 @@ export type UserWhereInput = {
   username?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
+  openrouterApiKey?: Prisma.StringNullableFilter<"User"> | string | null
   session?: Prisma.SessionListRelationFilter
   cars?: Prisma.CarListRelationFilter
   problems?: Prisma.ProblemListRelationFilter
@@ -186,6 +194,7 @@ export type UserOrderByWithRelationInput = {
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  openrouterApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   session?: Prisma.SessionOrderByRelationAggregateInput
   cars?: Prisma.CarOrderByRelationAggregateInput
   problems?: Prisma.ProblemOrderByRelationAggregateInput
@@ -201,6 +210,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringFilter<"User"> | string
+  openrouterApiKey?: Prisma.StringNullableFilter<"User"> | string | null
   session?: Prisma.SessionListRelationFilter
   cars?: Prisma.CarListRelationFilter
   problems?: Prisma.ProblemListRelationFilter
@@ -213,6 +223,7 @@ export type UserOrderByWithAggregationInput = {
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  openrouterApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -226,6 +237,7 @@ export type UserScalarWhereWithAggregatesInput = {
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  openrouterApiKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -233,6 +245,7 @@ export type UserCreateInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -245,6 +258,7 @@ export type UserUncheckedCreateInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -257,6 +271,7 @@ export type UserUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -269,6 +284,7 @@ export type UserUncheckedUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -281,6 +297,7 @@ export type UserCreateManyInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -288,6 +305,7 @@ export type UserUpdateManyMutationInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -295,6 +313,7 @@ export type UserUncheckedUpdateManyInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserScalarRelationFilter = {
@@ -307,6 +326,7 @@ export type UserCountOrderByAggregateInput = {
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  openrouterApiKey?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -314,6 +334,7 @@ export type UserMaxOrderByAggregateInput = {
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  openrouterApiKey?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -321,6 +342,7 @@ export type UserMinOrderByAggregateInput = {
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  openrouterApiKey?: Prisma.SortOrder
 }
 
 export type UserCreateNestedOneWithoutCarsInput = {
@@ -398,6 +420,7 @@ export type UserCreateWithoutCarsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -409,6 +432,7 @@ export type UserUncheckedCreateWithoutCarsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -436,6 +460,7 @@ export type UserUpdateWithoutCarsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -447,6 +472,7 @@ export type UserUncheckedUpdateWithoutCarsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -458,6 +484,7 @@ export type UserCreateWithoutSessionInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -469,6 +496,7 @@ export type UserUncheckedCreateWithoutSessionInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -496,6 +524,7 @@ export type UserUpdateWithoutSessionInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -507,6 +536,7 @@ export type UserUncheckedUpdateWithoutSessionInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -518,6 +548,7 @@ export type UserCreateWithoutProblemsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -529,6 +560,7 @@ export type UserUncheckedCreateWithoutProblemsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -556,6 +588,7 @@ export type UserUpdateWithoutProblemsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -567,6 +600,7 @@ export type UserUncheckedUpdateWithoutProblemsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -578,6 +612,7 @@ export type UserCreateWithoutExpensesInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -589,6 +624,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -616,6 +652,7 @@ export type UserUpdateWithoutExpensesInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -627,6 +664,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -638,6 +676,7 @@ export type UserCreateWithoutDocumentsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -649,6 +688,7 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   username: string
   email: string
   passwordHash: string
+  openrouterApiKey?: string | null
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -676,6 +716,7 @@ export type UserUpdateWithoutDocumentsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -687,6 +728,7 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -765,6 +807,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   username?: boolean
   email?: boolean
   passwordHash?: boolean
+  openrouterApiKey?: boolean
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
   cars?: boolean | Prisma.User$carsArgs<ExtArgs>
   problems?: boolean | Prisma.User$problemsArgs<ExtArgs>
@@ -778,6 +821,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   username?: boolean
   email?: boolean
   passwordHash?: boolean
+  openrouterApiKey?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -785,6 +829,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   username?: boolean
   email?: boolean
   passwordHash?: boolean
+  openrouterApiKey?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -792,9 +837,10 @@ export type UserSelectScalar = {
   username?: boolean
   email?: boolean
   passwordHash?: boolean
+  openrouterApiKey?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "openrouterApiKey", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
   cars?: boolean | Prisma.User$carsArgs<ExtArgs>
@@ -820,6 +866,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     username: string
     email: string
     passwordHash: string
+    openrouterApiKey: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1252,6 +1299,7 @@ export interface UserFieldRefs {
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly openrouterApiKey: Prisma.FieldRef<"User", 'String'>
 }
     
 
