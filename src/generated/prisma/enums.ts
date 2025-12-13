@@ -9,10 +9,32 @@
 * 🟢 You can import this file directly.
 */
 
-export const CarProblemStatus = {
+export const ProblemStatus = {
   OPEN: 'OPEN',
   IN_PROGRESS: 'IN_PROGRESS',
-  DONE: 'DONE'
+  RESOLVED: 'RESOLVED'
 } as const
 
-export type CarProblemStatus = (typeof CarProblemStatus)[keyof typeof CarProblemStatus]
+export type ProblemStatus = (typeof ProblemStatus)[keyof typeof ProblemStatus]
+
+
+export const ProblemSeverity = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
+} as const
+
+export type ProblemSeverity = (typeof ProblemSeverity)[keyof typeof ProblemSeverity]
+
+
+export const ExpenseType = {
+  PURCHASE: 'PURCHASE',
+  MAINTENANCE: 'MAINTENANCE',
+  REPAIR: 'REPAIR',
+  TUNING: 'TUNING',
+  TAX_INSURANCE: 'TAX_INSURANCE',
+  OTHER: 'OTHER'
+} as const
+
+export type ExpenseType = (typeof ExpenseType)[keyof typeof ExpenseType]

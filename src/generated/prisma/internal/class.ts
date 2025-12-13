@@ -17,10 +17,10 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.1.0",
-  "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
+  "clientVersion": "7.0.1",
+  "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "sqlite",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Car {\n  id           String           @id @default(cuid())\n  createdAt    DateTime         @default(now())\n  updatedAt    DateTime         @updatedAt\n  brand        String\n  model        String\n  price        Int\n  year         Int\n  color        String\n  mileage      Int\n  fuel         String\n  transmission String\n  registration String\n  userId       String\n  status       CarProblemStatus @default(OPEN)\n  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  problems Problem[]\n  comments Comment[]\n  images   Image[]\n\n  @@index([userId])\n}\n\nmodel Image {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  carId     String\n  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)\n\n  @@index([carId])\n}\n\nmodel User {\n  id           String    @id @default(cuid())\n  username     String    @unique\n  email        String    @unique\n  passwordHash String\n  session      Session[]\n  car          Car[]\n  comments     Comment[]\n  problems     Problem[]\n}\n\nmodel Session {\n  id        String   @id @default(cuid())\n  expiresAt DateTime\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n\n  @@index([userId])\n}\n\nenum CarProblemStatus {\n  OPEN\n  IN_PROGRESS\n  DONE\n}\n\nmodel Comment {\n  id        String           @id @default(cuid())\n  createdAt DateTime         @default(now())\n  updatedAt DateTime         @default(now())\n  content   String\n  carId     String\n  car       Car              @relation(fields: [carId], references: [id], onDelete: Cascade)\n  status    CarProblemStatus @default(OPEN)\n  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n  images    CommentImage[]\n\n  @@index([userId])\n}\n\nmodel Problem {\n  id        String           @id @default(cuid())\n  createdAt DateTime         @default(now())\n  updatedAt DateTime         @default(now())\n  content   String\n  carId     String\n  car       Car              @relation(fields: [carId], references: [id], onDelete: Cascade)\n  status    CarProblemStatus @default(OPEN)\n  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n  images    ProblemImage[]\n\n  @@index([userId])\n}\n\nmodel ProblemImage {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  problemId String\n  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@index([problemId])\n}\n\nmodel CommentImage {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now())\n  content   String\n  commentId String\n  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)\n\n  @@index([commentId])\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Car {\n  id                 String    @id @default(cuid())\n  createdAt          DateTime  @default(now())\n  updatedAt          DateTime  @updatedAt\n  make               String\n  model              String\n  year               Int\n  vin                String?\n  purchasePrice      Int\n  purchaseDate       DateTime\n  currentMileage     Int\n  nextInspectionDate DateTime\n  nextServiceDate    DateTime?\n  imageUrl           String?\n  userId             String\n  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  problems  Problem[]\n  expenses  Expense[]\n  documents Document[]\n\n  @@index([userId])\n}\n\nmodel User {\n  id           String     @id @default(cuid())\n  username     String     @unique\n  email        String     @unique\n  passwordHash String\n  session      Session[]\n  cars         Car[]\n  problems     Problem[]\n  expenses     Expense[]\n  documents    Document[]\n}\n\nmodel Session {\n  id        String   @id @default(cuid())\n  expiresAt DateTime\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId    String\n\n  @@index([userId])\n}\n\nenum ProblemStatus {\n  OPEN\n  IN_PROGRESS\n  RESOLVED\n}\n\nenum ProblemSeverity {\n  LOW\n  MEDIUM\n  HIGH\n  CRITICAL\n}\n\nenum ExpenseType {\n  PURCHASE\n  MAINTENANCE\n  REPAIR\n  TUNING\n  TAX_INSURANCE\n  OTHER\n}\n\nmodel Problem {\n  id            String          @id @default(cuid())\n  createdAt     DateTime        @default(now())\n  updatedAt     DateTime        @updatedAt\n  title         String\n  description   String\n  status        ProblemStatus   @default(OPEN)\n  severity      ProblemSeverity @default(MEDIUM)\n  estimatedCost Int?\n  aiAnalysis    String?\n  carId         String\n  car           Car             @relation(fields: [carId], references: [id], onDelete: Cascade)\n  userId        String\n  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([carId])\n  @@index([userId])\n}\n\nmodel Expense {\n  id          String      @id @default(cuid())\n  createdAt   DateTime    @default(now())\n  updatedAt   DateTime    @updatedAt\n  description String\n  amount      Int\n  date        DateTime\n  type        ExpenseType @default(MAINTENANCE)\n  carId       String\n  car         Car         @relation(fields: [carId], references: [id], onDelete: Cascade)\n  userId      String\n  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([carId])\n  @@index([userId])\n}\n\nmodel Document {\n  id        String   @id @default(cuid())\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  name      String\n  fileType  String\n  content   String\n  carId     String\n  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([carId])\n  @@index([userId])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Car\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"brand\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"model\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mileage\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"fuel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transmission\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registration\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"CarProblemStatus\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CarToUser\"},{\"name\":\"problems\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"CarToProblem\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CarToComment\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"Image\",\"relationName\":\"CarToImage\"}],\"dbName\":null},\"Image\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToImage\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToUser\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToUser\"},{\"name\":\"problems\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToUser\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Comment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToComment\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"CarProblemStatus\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CommentToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"CommentImage\",\"relationName\":\"CommentToCommentImage\"}],\"dbName\":null},\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToProblem\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"CarProblemStatus\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProblemToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"ProblemImage\",\"relationName\":\"ProblemToProblemImage\"}],\"dbName\":null},\"ProblemImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"problem\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToProblemImage\"}],\"dbName\":null},\"CommentImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"commentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comment\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToCommentImage\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Car\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"make\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"model\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"vin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"purchasePrice\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"purchaseDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"currentMileage\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nextInspectionDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"nextServiceDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CarToUser\"},{\"name\":\"problems\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"CarToProblem\"},{\"name\":\"expenses\",\"kind\":\"object\",\"type\":\"Expense\",\"relationName\":\"CarToExpense\"},{\"name\":\"documents\",\"kind\":\"object\",\"type\":\"Document\",\"relationName\":\"CarToDocument\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"cars\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToUser\"},{\"name\":\"problems\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToUser\"},{\"name\":\"expenses\",\"kind\":\"object\",\"type\":\"Expense\",\"relationName\":\"ExpenseToUser\"},{\"name\":\"documents\",\"kind\":\"object\",\"type\":\"Document\",\"relationName\":\"DocumentToUser\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ProblemStatus\"},{\"name\":\"severity\",\"kind\":\"enum\",\"type\":\"ProblemSeverity\"},{\"name\":\"estimatedCost\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"aiAnalysis\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToProblem\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProblemToUser\"}],\"dbName\":null},\"Expense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ExpenseType\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToExpense\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ExpenseToUser\"}],\"dbName\":null},\"Document\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fileType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"car\",\"kind\":\"object\",\"type\":\"Car\",\"relationName\":\"CarToDocument\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"DocumentToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -62,7 +62,7 @@ export interface PrismaClientConstructor {
    * const cars = await prisma.car.findMany()
    * ```
    * 
-   * Read more in our [docs](https://pris.ly/d/client).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
   new <
@@ -84,7 +84,7 @@ export interface PrismaClientConstructor {
  * const cars = await prisma.car.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 
 export interface PrismaClient<
@@ -113,7 +113,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -125,7 +125,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -136,7 +136,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -148,7 +148,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -185,16 +185,6 @@ export interface PrismaClient<
   get car(): Prisma.CarDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.image`: Exposes CRUD operations for the **Image** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Images
-    * const images = await prisma.image.findMany()
-    * ```
-    */
-  get image(): Prisma.ImageDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -215,16 +205,6 @@ export interface PrismaClient<
   get session(): Prisma.SessionDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Comments
-    * const comments = await prisma.comment.findMany()
-    * ```
-    */
-  get comment(): Prisma.CommentDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.problem`: Exposes CRUD operations for the **Problem** model.
     * Example usage:
     * ```ts
@@ -235,24 +215,24 @@ export interface PrismaClient<
   get problem(): Prisma.ProblemDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.problemImage`: Exposes CRUD operations for the **ProblemImage** model.
+   * `prisma.expense`: Exposes CRUD operations for the **Expense** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ProblemImages
-    * const problemImages = await prisma.problemImage.findMany()
+    * // Fetch zero or more Expenses
+    * const expenses = await prisma.expense.findMany()
     * ```
     */
-  get problemImage(): Prisma.ProblemImageDelegate<ExtArgs, { omit: OmitOpts }>;
+  get expense(): Prisma.ExpenseDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.commentImage`: Exposes CRUD operations for the **CommentImage** model.
+   * `prisma.document`: Exposes CRUD operations for the **Document** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more CommentImages
-    * const commentImages = await prisma.commentImage.findMany()
+    * // Fetch zero or more Documents
+    * const documents = await prisma.document.findMany()
     * ```
     */
-  get commentImage(): Prisma.CommentImageDelegate<ExtArgs, { omit: OmitOpts }>;
+  get document(): Prisma.DocumentDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

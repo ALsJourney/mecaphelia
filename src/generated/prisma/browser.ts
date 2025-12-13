@@ -23,11 +23,6 @@ export * from './enums';
  */
 export type Car = Prisma.CarModel
 /**
- * Model Image
- * 
- */
-export type Image = Prisma.ImageModel
-/**
  * Model User
  * 
  */
@@ -38,22 +33,17 @@ export type User = Prisma.UserModel
  */
 export type Session = Prisma.SessionModel
 /**
- * Model Comment
- * 
- */
-export type Comment = Prisma.CommentModel
-/**
  * Model Problem
  * 
  */
 export type Problem = Prisma.ProblemModel
 /**
- * Model ProblemImage
+ * Model Expense
  * 
  */
-export type ProblemImage = Prisma.ProblemImageModel
+export type Expense = Prisma.ExpenseModel
 /**
- * Model CommentImage
+ * Model Document
  * 
  */
-export type CommentImage = Prisma.CommentImageModel
+export type Document = Prisma.DocumentModel

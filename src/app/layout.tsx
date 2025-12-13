@@ -7,19 +7,29 @@ import { Header } from "@/app/_navigation/header";
 import { Sidebar } from "@/app/_navigation/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { cn } from "@/lib/utils";
+import localFont from 'next/font/local'
 
 export const metadata: Metadata = {
   title: "The Road Next",
   description: "My Road to Next Appliaction...",
 };
 
-export default function RootLayout({
+const font = localFont({
+  src: './../../public/League_Spartan/LeagueSpartan-VariableFont_wght.ttf',
+})
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user } = await getAuth();
+  const isAuthenticated = Boolean(user);
+
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className={font.className}>
       <body>
         <NuqsAdapter>
           <ThemeProvider>
@@ -27,19 +37,10 @@ export default function RootLayout({
             <div className="flex h-screen overflow-hidden border-collapse">
               <Sidebar />
               <main
-                className="
-                duration-200
-                pl-[78px]
-                peer-hover:pl-[240px]
-                min-h-screen
-                flex-1
-                overflow-y-auto
-                overflow-x-hidden
-                py-24
-                px-8
-                bg-secondary/20
-                flex flex-col
-                "
+                className={cn(
+                  "duration-200 pl-[78px] peer-hover:pl-[240px] min-h-screen flex-1 overflow-y-auto overflow-x-hidden bg-secondary/20 flex flex-col",
+                  isAuthenticated && "py-24 px-8",
+                )}
               >
                 {children}
               </main>

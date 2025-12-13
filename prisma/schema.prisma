@@ -14,38 +14,27 @@ datasource db {
 }
 
 model Car {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  brand     String
-  model   String       
-  price     Int
-  year      Int
-  color     String
-  mileage   Int
-  fuel      String
-  transmission String
-  registration String
-  userId    String
-  status    CarProblemStatus @default(OPEN)
-  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  String       @id @default(cuid())
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  make                String
+  model               String       
+  year                Int
+  vin                 String?
+  purchasePrice       Int
+  purchaseDate        DateTime
+  currentMileage      Int
+  nextInspectionDate  DateTime
+  nextServiceDate     DateTime?
+  imageUrl            String?
+  userId              String
+  user                User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  problems Problem[]
-  comments Comment[]
-  images Image[]
+  problems   Problem[]
+  expenses   Expense[]
+  documents  Document[]
 
   @@index([userId])
-}
-
-model Image {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String   
-  carId     String
-  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
-
-  @@index([carId])
 }
 
 model User {
@@ -54,9 +43,10 @@ model User {
   email        String    @unique
   passwordHash String
   session      Session[]
-  car          Car[]
-  comments     Comment[]
+  cars         Car[]
   problems     Problem[]
+  expenses     Expense[]
+  documents    Document[]
 }
 
 model Session {
@@ -68,60 +58,76 @@ model Session {
   @@index([userId])
 }
 
-enum CarProblemStatus {
+enum ProblemStatus {
   OPEN
   IN_PROGRESS
-  DONE
+  RESOLVED
 }
 
-model Comment {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String   
-  carId     String
-  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
-  status    CarProblemStatus @default(OPEN)
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  images CommentImage[]
+enum ProblemSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
 
-  @@index([userId])
+enum ExpenseType {
+  PURCHASE
+  MAINTENANCE
+  REPAIR
+  TUNING
+  TAX_INSURANCE
+  OTHER
 }
 
 model Problem {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String    
-  carId     String
-  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
-  status    CarProblemStatus @default(OPEN)
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  images ProblemImage[]
+  id            String          @id @default(cuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  title         String
+  description   String
+  status        ProblemStatus   @default(OPEN)
+  severity      ProblemSeverity @default(MEDIUM)
+  estimatedCost Int?
+  aiAnalysis    String?
+  carId         String
+  car           Car             @relation(fields: [carId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([carId])
   @@index([userId])
 }
 
-model ProblemImage {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String   
-  problemId String
-  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+model Expense {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  description String
+  amount      Int
+  date        DateTime
+  type        ExpenseType @default(MAINTENANCE)
+  carId       String
+  car         Car         @relation(fields: [carId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([problemId])
+  @@index([carId])
+  @@index([userId])
 }
 
-model CommentImage {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  content   String   
-  commentId String
-  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+model Document {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String
+  fileType     String
+  content      String
+  carId        String
+  car          Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([commentId])
+  @@index([carId])
+  @@index([userId])
 }

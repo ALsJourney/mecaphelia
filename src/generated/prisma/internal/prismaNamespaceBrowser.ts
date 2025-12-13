@@ -52,13 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Car: 'Car',
-  Image: 'Image',
   User: 'User',
   Session: 'Session',
-  Comment: 'Comment',
   Problem: 'Problem',
-  ProblemImage: 'ProblemImage',
-  CommentImage: 'CommentImage'
+  Expense: 'Expense',
+  Document: 'Document'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,31 +76,20 @@ export const CarScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  brand: 'brand',
+  make: 'make',
   model: 'model',
-  price: 'price',
   year: 'year',
-  color: 'color',
-  mileage: 'mileage',
-  fuel: 'fuel',
-  transmission: 'transmission',
-  registration: 'registration',
-  userId: 'userId',
-  status: 'status'
+  vin: 'vin',
+  purchasePrice: 'purchasePrice',
+  purchaseDate: 'purchaseDate',
+  currentMileage: 'currentMileage',
+  nextInspectionDate: 'nextInspectionDate',
+  nextServiceDate: 'nextServiceDate',
+  imageUrl: 'imageUrl',
+  userId: 'userId'
 } as const
 
 export type CarScalarFieldEnum = (typeof CarScalarFieldEnum)[keyof typeof CarScalarFieldEnum]
-
-
-export const ImageScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  content: 'content',
-  carId: 'carId'
-} as const
-
-export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -124,52 +111,50 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
-export const CommentScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  content: 'content',
-  carId: 'carId',
-  status: 'status',
-  userId: 'userId'
-} as const
-
-export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
-
-
 export const ProblemScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  content: 'content',
-  carId: 'carId',
+  title: 'title',
+  description: 'description',
   status: 'status',
+  severity: 'severity',
+  estimatedCost: 'estimatedCost',
+  aiAnalysis: 'aiAnalysis',
+  carId: 'carId',
   userId: 'userId'
 } as const
 
 export type ProblemScalarFieldEnum = (typeof ProblemScalarFieldEnum)[keyof typeof ProblemScalarFieldEnum]
 
 
-export const ProblemImageScalarFieldEnum = {
+export const ExpenseScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  content: 'content',
-  problemId: 'problemId'
+  description: 'description',
+  amount: 'amount',
+  date: 'date',
+  type: 'type',
+  carId: 'carId',
+  userId: 'userId'
 } as const
 
-export type ProblemImageScalarFieldEnum = (typeof ProblemImageScalarFieldEnum)[keyof typeof ProblemImageScalarFieldEnum]
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
 
 
-export const CommentImageScalarFieldEnum = {
+export const DocumentScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  name: 'name',
+  fileType: 'fileType',
   content: 'content',
-  commentId: 'commentId'
+  carId: 'carId',
+  userId: 'userId'
 } as const
 
-export type CommentImageScalarFieldEnum = (typeof CommentImageScalarFieldEnum)[keyof typeof CommentImageScalarFieldEnum]
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -178,4 +163,12 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

@@ -27,131 +27,131 @@ export type AggregateCar = {
 }
 
 export type CarAvgAggregateOutputType = {
-  price: number | null
   year: number | null
-  mileage: number | null
+  purchasePrice: number | null
+  currentMileage: number | null
 }
 
 export type CarSumAggregateOutputType = {
-  price: number | null
   year: number | null
-  mileage: number | null
+  purchasePrice: number | null
+  currentMileage: number | null
 }
 
 export type CarMinAggregateOutputType = {
   id: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  brand: string | null
+  make: string | null
   model: string | null
-  price: number | null
   year: number | null
-  color: string | null
-  mileage: number | null
-  fuel: string | null
-  transmission: string | null
-  registration: string | null
+  vin: string | null
+  purchasePrice: number | null
+  purchaseDate: Date | null
+  currentMileage: number | null
+  nextInspectionDate: Date | null
+  nextServiceDate: Date | null
+  imageUrl: string | null
   userId: string | null
-  status: $Enums.CarProblemStatus | null
 }
 
 export type CarMaxAggregateOutputType = {
   id: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  brand: string | null
+  make: string | null
   model: string | null
-  price: number | null
   year: number | null
-  color: string | null
-  mileage: number | null
-  fuel: string | null
-  transmission: string | null
-  registration: string | null
+  vin: string | null
+  purchasePrice: number | null
+  purchaseDate: Date | null
+  currentMileage: number | null
+  nextInspectionDate: Date | null
+  nextServiceDate: Date | null
+  imageUrl: string | null
   userId: string | null
-  status: $Enums.CarProblemStatus | null
 }
 
 export type CarCountAggregateOutputType = {
   id: number
   createdAt: number
   updatedAt: number
-  brand: number
+  make: number
   model: number
-  price: number
   year: number
-  color: number
-  mileage: number
-  fuel: number
-  transmission: number
-  registration: number
+  vin: number
+  purchasePrice: number
+  purchaseDate: number
+  currentMileage: number
+  nextInspectionDate: number
+  nextServiceDate: number
+  imageUrl: number
   userId: number
-  status: number
   _all: number
 }
 
 
 export type CarAvgAggregateInputType = {
-  price?: true
   year?: true
-  mileage?: true
+  purchasePrice?: true
+  currentMileage?: true
 }
 
 export type CarSumAggregateInputType = {
-  price?: true
   year?: true
-  mileage?: true
+  purchasePrice?: true
+  currentMileage?: true
 }
 
 export type CarMinAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
-  brand?: true
+  make?: true
   model?: true
-  price?: true
   year?: true
-  color?: true
-  mileage?: true
-  fuel?: true
-  transmission?: true
-  registration?: true
+  vin?: true
+  purchasePrice?: true
+  purchaseDate?: true
+  currentMileage?: true
+  nextInspectionDate?: true
+  nextServiceDate?: true
+  imageUrl?: true
   userId?: true
-  status?: true
 }
 
 export type CarMaxAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
-  brand?: true
+  make?: true
   model?: true
-  price?: true
   year?: true
-  color?: true
-  mileage?: true
-  fuel?: true
-  transmission?: true
-  registration?: true
+  vin?: true
+  purchasePrice?: true
+  purchaseDate?: true
+  currentMileage?: true
+  nextInspectionDate?: true
+  nextServiceDate?: true
+  imageUrl?: true
   userId?: true
-  status?: true
 }
 
 export type CarCountAggregateInputType = {
   id?: true
   createdAt?: true
   updatedAt?: true
-  brand?: true
+  make?: true
   model?: true
-  price?: true
   year?: true
-  color?: true
-  mileage?: true
-  fuel?: true
-  transmission?: true
-  registration?: true
+  vin?: true
+  purchasePrice?: true
+  purchaseDate?: true
+  currentMileage?: true
+  nextInspectionDate?: true
+  nextServiceDate?: true
+  imageUrl?: true
   userId?: true
-  status?: true
   _all?: true
 }
 
@@ -245,17 +245,17 @@ export type CarGroupByOutputType = {
   id: string
   createdAt: Date
   updatedAt: Date
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
+  vin: string | null
+  purchasePrice: number
+  purchaseDate: Date
+  currentMileage: number
+  nextInspectionDate: Date
+  nextServiceDate: Date | null
+  imageUrl: string | null
   userId: string
-  status: $Enums.CarProblemStatus
   _count: CarCountAggregateOutputType | null
   _avg: CarAvgAggregateOutputType | null
   _sum: CarSumAggregateOutputType | null
@@ -285,42 +285,42 @@ export type CarWhereInput = {
   id?: Prisma.StringFilter<"Car"> | string
   createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Car"> | Date | string
-  brand?: Prisma.StringFilter<"Car"> | string
+  make?: Prisma.StringFilter<"Car"> | string
   model?: Prisma.StringFilter<"Car"> | string
-  price?: Prisma.IntFilter<"Car"> | number
   year?: Prisma.IntFilter<"Car"> | number
-  color?: Prisma.StringFilter<"Car"> | string
-  mileage?: Prisma.IntFilter<"Car"> | number
-  fuel?: Prisma.StringFilter<"Car"> | string
-  transmission?: Prisma.StringFilter<"Car"> | string
-  registration?: Prisma.StringFilter<"Car"> | string
+  vin?: Prisma.StringNullableFilter<"Car"> | string | null
+  purchasePrice?: Prisma.IntFilter<"Car"> | number
+  purchaseDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  currentMileage?: Prisma.IntFilter<"Car"> | number
+  nextInspectionDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  nextServiceDate?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Car"> | string | null
   userId?: Prisma.StringFilter<"Car"> | string
-  status?: Prisma.EnumCarProblemStatusFilter<"Car"> | $Enums.CarProblemStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problems?: Prisma.ProblemListRelationFilter
-  comments?: Prisma.CommentListRelationFilter
-  images?: Prisma.ImageListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
+  documents?: Prisma.DocumentListRelationFilter
 }
 
 export type CarOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
+  make?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  color?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-  fuel?: Prisma.SortOrder
-  transmission?: Prisma.SortOrder
-  registration?: Prisma.SortOrder
+  vin?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
+  nextServiceDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   problems?: Prisma.ProblemOrderByRelationAggregateInput
-  comments?: Prisma.CommentOrderByRelationAggregateInput
-  images?: Prisma.ImageOrderByRelationAggregateInput
+  expenses?: Prisma.ExpenseOrderByRelationAggregateInput
+  documents?: Prisma.DocumentOrderByRelationAggregateInput
 }
 
 export type CarWhereUniqueInput = Prisma.AtLeast<{
@@ -330,38 +330,38 @@ export type CarWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CarWhereInput | Prisma.CarWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Car"> | Date | string
-  brand?: Prisma.StringFilter<"Car"> | string
+  make?: Prisma.StringFilter<"Car"> | string
   model?: Prisma.StringFilter<"Car"> | string
-  price?: Prisma.IntFilter<"Car"> | number
   year?: Prisma.IntFilter<"Car"> | number
-  color?: Prisma.StringFilter<"Car"> | string
-  mileage?: Prisma.IntFilter<"Car"> | number
-  fuel?: Prisma.StringFilter<"Car"> | string
-  transmission?: Prisma.StringFilter<"Car"> | string
-  registration?: Prisma.StringFilter<"Car"> | string
+  vin?: Prisma.StringNullableFilter<"Car"> | string | null
+  purchasePrice?: Prisma.IntFilter<"Car"> | number
+  purchaseDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  currentMileage?: Prisma.IntFilter<"Car"> | number
+  nextInspectionDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  nextServiceDate?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Car"> | string | null
   userId?: Prisma.StringFilter<"Car"> | string
-  status?: Prisma.EnumCarProblemStatusFilter<"Car"> | $Enums.CarProblemStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problems?: Prisma.ProblemListRelationFilter
-  comments?: Prisma.CommentListRelationFilter
-  images?: Prisma.ImageListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
+  documents?: Prisma.DocumentListRelationFilter
 }, "id">
 
 export type CarOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
+  make?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  color?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-  fuel?: Prisma.SortOrder
-  transmission?: Prisma.SortOrder
-  registration?: Prisma.SortOrder
+  vin?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
+  nextServiceDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   _count?: Prisma.CarCountOrderByAggregateInput
   _avg?: Prisma.CarAvgOrderByAggregateInput
   _max?: Prisma.CarMaxOrderByAggregateInput
@@ -376,215 +376,210 @@ export type CarScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Car"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Car"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Car"> | Date | string
-  brand?: Prisma.StringWithAggregatesFilter<"Car"> | string
+  make?: Prisma.StringWithAggregatesFilter<"Car"> | string
   model?: Prisma.StringWithAggregatesFilter<"Car"> | string
-  price?: Prisma.IntWithAggregatesFilter<"Car"> | number
   year?: Prisma.IntWithAggregatesFilter<"Car"> | number
-  color?: Prisma.StringWithAggregatesFilter<"Car"> | string
-  mileage?: Prisma.IntWithAggregatesFilter<"Car"> | number
-  fuel?: Prisma.StringWithAggregatesFilter<"Car"> | string
-  transmission?: Prisma.StringWithAggregatesFilter<"Car"> | string
-  registration?: Prisma.StringWithAggregatesFilter<"Car"> | string
+  vin?: Prisma.StringNullableWithAggregatesFilter<"Car"> | string | null
+  purchasePrice?: Prisma.IntWithAggregatesFilter<"Car"> | number
+  purchaseDate?: Prisma.DateTimeWithAggregatesFilter<"Car"> | Date | string
+  currentMileage?: Prisma.IntWithAggregatesFilter<"Car"> | number
+  nextInspectionDate?: Prisma.DateTimeWithAggregatesFilter<"Car"> | Date | string
+  nextServiceDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Car"> | Date | string | null
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Car"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Car"> | string
-  status?: Prisma.EnumCarProblemStatusWithAggregatesFilter<"Car"> | $Enums.CarProblemStatus
 }
 
 export type CarCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
-  user: Prisma.UserCreateNestedOneWithoutCarInput
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  user: Prisma.UserCreateNestedOneWithoutCarsInput
   problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutCarInput
 }
 
 export type CarUncheckedCreateInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
   userId: string
-  status?: $Enums.CarProblemStatus
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageUncheckedCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutCarInput
 }
 
 export type CarUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  user?: Prisma.UserUpdateOneRequiredWithoutCarNestedInput
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutCarsNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutCarNestedInput
 }
 
 export type CarUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUncheckedUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutCarNestedInput
 }
 
 export type CarCreateManyInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
   userId: string
-  status?: $Enums.CarProblemStatus
 }
 
 export type CarUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CarUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
 }
 
 export type CarCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
+  make?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  color?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-  fuel?: Prisma.SortOrder
-  transmission?: Prisma.SortOrder
-  registration?: Prisma.SortOrder
+  vin?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
+  nextServiceDate?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  status?: Prisma.SortOrder
 }
 
 export type CarAvgOrderByAggregateInput = {
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
 }
 
 export type CarMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
+  make?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  color?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-  fuel?: Prisma.SortOrder
-  transmission?: Prisma.SortOrder
-  registration?: Prisma.SortOrder
+  vin?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
+  nextServiceDate?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  status?: Prisma.SortOrder
 }
 
 export type CarMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
+  make?: Prisma.SortOrder
   model?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  color?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-  fuel?: Prisma.SortOrder
-  transmission?: Prisma.SortOrder
-  registration?: Prisma.SortOrder
+  vin?: Prisma.SortOrder
+  purchasePrice?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
+  nextServiceDate?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  status?: Prisma.SortOrder
 }
 
 export type CarSumOrderByAggregateInput = {
-  price?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  mileage?: Prisma.SortOrder
-}
-
-export type CarScalarRelationFilter = {
-  is?: Prisma.CarWhereInput
-  isNot?: Prisma.CarWhereInput
+  purchasePrice?: Prisma.SortOrder
+  currentMileage?: Prisma.SortOrder
 }
 
 export type CarListRelationFilter = {
@@ -595,6 +590,11 @@ export type CarListRelationFilter = {
 
 export type CarOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CarScalarRelationFilter = {
+  is?: Prisma.CarWhereInput
+  isNot?: Prisma.CarWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -613,22 +613,12 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type EnumCarProblemStatusFieldUpdateOperationsInput = {
-  set?: $Enums.CarProblemStatus
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
-export type CarCreateNestedOneWithoutImagesInput = {
-  create?: Prisma.XOR<Prisma.CarCreateWithoutImagesInput, Prisma.CarUncheckedCreateWithoutImagesInput>
-  connectOrCreate?: Prisma.CarCreateOrConnectWithoutImagesInput
-  connect?: Prisma.CarWhereUniqueInput
-}
-
-export type CarUpdateOneRequiredWithoutImagesNestedInput = {
-  create?: Prisma.XOR<Prisma.CarCreateWithoutImagesInput, Prisma.CarUncheckedCreateWithoutImagesInput>
-  connectOrCreate?: Prisma.CarCreateOrConnectWithoutImagesInput
-  upsert?: Prisma.CarUpsertWithoutImagesInput
-  connect?: Prisma.CarWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutImagesInput, Prisma.CarUpdateWithoutImagesInput>, Prisma.CarUncheckedUpdateWithoutImagesInput>
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type CarCreateNestedManyWithoutUserInput = {
@@ -673,20 +663,6 @@ export type CarUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CarScalarWhereInput | Prisma.CarScalarWhereInput[]
 }
 
-export type CarCreateNestedOneWithoutCommentsInput = {
-  create?: Prisma.XOR<Prisma.CarCreateWithoutCommentsInput, Prisma.CarUncheckedCreateWithoutCommentsInput>
-  connectOrCreate?: Prisma.CarCreateOrConnectWithoutCommentsInput
-  connect?: Prisma.CarWhereUniqueInput
-}
-
-export type CarUpdateOneRequiredWithoutCommentsNestedInput = {
-  create?: Prisma.XOR<Prisma.CarCreateWithoutCommentsInput, Prisma.CarUncheckedCreateWithoutCommentsInput>
-  connectOrCreate?: Prisma.CarCreateOrConnectWithoutCommentsInput
-  upsert?: Prisma.CarUpsertWithoutCommentsInput
-  connect?: Prisma.CarWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutCommentsInput, Prisma.CarUpdateWithoutCommentsInput>, Prisma.CarUncheckedUpdateWithoutCommentsInput>
-}
-
 export type CarCreateNestedOneWithoutProblemsInput = {
   create?: Prisma.XOR<Prisma.CarCreateWithoutProblemsInput, Prisma.CarUncheckedCreateWithoutProblemsInput>
   connectOrCreate?: Prisma.CarCreateOrConnectWithoutProblemsInput
@@ -701,134 +677,70 @@ export type CarUpdateOneRequiredWithoutProblemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutProblemsInput, Prisma.CarUpdateWithoutProblemsInput>, Prisma.CarUncheckedUpdateWithoutProblemsInput>
 }
 
-export type CarCreateWithoutImagesInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  brand: string
-  model: string
-  price: number
-  year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
-  user: Prisma.UserCreateNestedOneWithoutCarInput
-  problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentCreateNestedManyWithoutCarInput
+export type CarCreateNestedOneWithoutExpensesInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutExpensesInput, Prisma.CarUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutExpensesInput
+  connect?: Prisma.CarWhereUniqueInput
 }
 
-export type CarUncheckedCreateWithoutImagesInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  brand: string
-  model: string
-  price: number
-  year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  userId: string
-  status?: $Enums.CarProblemStatus
-  problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutCarInput
+export type CarUpdateOneRequiredWithoutExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutExpensesInput, Prisma.CarUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutExpensesInput
+  upsert?: Prisma.CarUpsertWithoutExpensesInput
+  connect?: Prisma.CarWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutExpensesInput, Prisma.CarUpdateWithoutExpensesInput>, Prisma.CarUncheckedUpdateWithoutExpensesInput>
 }
 
-export type CarCreateOrConnectWithoutImagesInput = {
-  where: Prisma.CarWhereUniqueInput
-  create: Prisma.XOR<Prisma.CarCreateWithoutImagesInput, Prisma.CarUncheckedCreateWithoutImagesInput>
+export type CarCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutDocumentsInput, Prisma.CarUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.CarWhereUniqueInput
 }
 
-export type CarUpsertWithoutImagesInput = {
-  update: Prisma.XOR<Prisma.CarUpdateWithoutImagesInput, Prisma.CarUncheckedUpdateWithoutImagesInput>
-  create: Prisma.XOR<Prisma.CarCreateWithoutImagesInput, Prisma.CarUncheckedCreateWithoutImagesInput>
-  where?: Prisma.CarWhereInput
-}
-
-export type CarUpdateToOneWithWhereWithoutImagesInput = {
-  where?: Prisma.CarWhereInput
-  data: Prisma.XOR<Prisma.CarUpdateWithoutImagesInput, Prisma.CarUncheckedUpdateWithoutImagesInput>
-}
-
-export type CarUpdateWithoutImagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
-  year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  user?: Prisma.UserUpdateOneRequiredWithoutCarNestedInput
-  problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutCarNestedInput
-}
-
-export type CarUncheckedUpdateWithoutImagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
-  year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutCarNestedInput
+export type CarUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutDocumentsInput, Prisma.CarUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.CarUpsertWithoutDocumentsInput
+  connect?: Prisma.CarWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutDocumentsInput, Prisma.CarUpdateWithoutDocumentsInput>, Prisma.CarUncheckedUpdateWithoutDocumentsInput>
 }
 
 export type CarCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
   problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutCarInput
 }
 
 export type CarUncheckedCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
-  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageUncheckedCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutCarInput
 }
 
 export type CarCreateOrConnectWithoutUserInput = {
@@ -863,147 +775,55 @@ export type CarScalarWhereInput = {
   id?: Prisma.StringFilter<"Car"> | string
   createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Car"> | Date | string
-  brand?: Prisma.StringFilter<"Car"> | string
+  make?: Prisma.StringFilter<"Car"> | string
   model?: Prisma.StringFilter<"Car"> | string
-  price?: Prisma.IntFilter<"Car"> | number
   year?: Prisma.IntFilter<"Car"> | number
-  color?: Prisma.StringFilter<"Car"> | string
-  mileage?: Prisma.IntFilter<"Car"> | number
-  fuel?: Prisma.StringFilter<"Car"> | string
-  transmission?: Prisma.StringFilter<"Car"> | string
-  registration?: Prisma.StringFilter<"Car"> | string
+  vin?: Prisma.StringNullableFilter<"Car"> | string | null
+  purchasePrice?: Prisma.IntFilter<"Car"> | number
+  purchaseDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  currentMileage?: Prisma.IntFilter<"Car"> | number
+  nextInspectionDate?: Prisma.DateTimeFilter<"Car"> | Date | string
+  nextServiceDate?: Prisma.DateTimeNullableFilter<"Car"> | Date | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Car"> | string | null
   userId?: Prisma.StringFilter<"Car"> | string
-  status?: Prisma.EnumCarProblemStatusFilter<"Car"> | $Enums.CarProblemStatus
-}
-
-export type CarCreateWithoutCommentsInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  brand: string
-  model: string
-  price: number
-  year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
-  user: Prisma.UserCreateNestedOneWithoutCarInput
-  problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageCreateNestedManyWithoutCarInput
-}
-
-export type CarUncheckedCreateWithoutCommentsInput = {
-  id?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  brand: string
-  model: string
-  price: number
-  year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  userId: string
-  status?: $Enums.CarProblemStatus
-  problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageUncheckedCreateNestedManyWithoutCarInput
-}
-
-export type CarCreateOrConnectWithoutCommentsInput = {
-  where: Prisma.CarWhereUniqueInput
-  create: Prisma.XOR<Prisma.CarCreateWithoutCommentsInput, Prisma.CarUncheckedCreateWithoutCommentsInput>
-}
-
-export type CarUpsertWithoutCommentsInput = {
-  update: Prisma.XOR<Prisma.CarUpdateWithoutCommentsInput, Prisma.CarUncheckedUpdateWithoutCommentsInput>
-  create: Prisma.XOR<Prisma.CarCreateWithoutCommentsInput, Prisma.CarUncheckedCreateWithoutCommentsInput>
-  where?: Prisma.CarWhereInput
-}
-
-export type CarUpdateToOneWithWhereWithoutCommentsInput = {
-  where?: Prisma.CarWhereInput
-  data: Prisma.XOR<Prisma.CarUpdateWithoutCommentsInput, Prisma.CarUncheckedUpdateWithoutCommentsInput>
-}
-
-export type CarUpdateWithoutCommentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
-  year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  user?: Prisma.UserUpdateOneRequiredWithoutCarNestedInput
-  problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUpdateManyWithoutCarNestedInput
-}
-
-export type CarUncheckedUpdateWithoutCommentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
-  year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUncheckedUpdateManyWithoutCarNestedInput
 }
 
 export type CarCreateWithoutProblemsInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
-  user: Prisma.UserCreateNestedOneWithoutCarInput
-  comments?: Prisma.CommentCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageCreateNestedManyWithoutCarInput
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  user: Prisma.UserCreateNestedOneWithoutCarsInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutCarInput
 }
 
 export type CarUncheckedCreateWithoutProblemsInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
   userId: string
-  status?: $Enums.CarProblemStatus
-  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutCarInput
-  images?: Prisma.ImageUncheckedCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutCarInput
 }
 
 export type CarCreateOrConnectWithoutProblemsInput = {
@@ -1026,108 +846,292 @@ export type CarUpdateWithoutProblemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  user?: Prisma.UserUpdateOneRequiredWithoutCarNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUpdateManyWithoutCarNestedInput
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutCarsNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutCarNestedInput
 }
 
 export type CarUncheckedUpdateWithoutProblemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUncheckedUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutCarNestedInput
+}
+
+export type CarCreateWithoutExpensesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  make: string
+  model: string
+  year: number
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  user: Prisma.UserCreateNestedOneWithoutCarsInput
+  problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutCarInput
+}
+
+export type CarUncheckedCreateWithoutExpensesInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  make: string
+  model: string
+  year: number
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  userId: string
+  problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutCarInput
+}
+
+export type CarCreateOrConnectWithoutExpensesInput = {
+  where: Prisma.CarWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarCreateWithoutExpensesInput, Prisma.CarUncheckedCreateWithoutExpensesInput>
+}
+
+export type CarUpsertWithoutExpensesInput = {
+  update: Prisma.XOR<Prisma.CarUpdateWithoutExpensesInput, Prisma.CarUncheckedUpdateWithoutExpensesInput>
+  create: Prisma.XOR<Prisma.CarCreateWithoutExpensesInput, Prisma.CarUncheckedCreateWithoutExpensesInput>
+  where?: Prisma.CarWhereInput
+}
+
+export type CarUpdateToOneWithWhereWithoutExpensesInput = {
+  where?: Prisma.CarWhereInput
+  data: Prisma.XOR<Prisma.CarUpdateWithoutExpensesInput, Prisma.CarUncheckedUpdateWithoutExpensesInput>
+}
+
+export type CarUpdateWithoutExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutCarsNestedInput
+  problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutCarNestedInput
+}
+
+export type CarUncheckedUpdateWithoutExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutCarNestedInput
+}
+
+export type CarCreateWithoutDocumentsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  make: string
+  model: string
+  year: number
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  user: Prisma.UserCreateNestedOneWithoutCarsInput
+  problems?: Prisma.ProblemCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutCarInput
+}
+
+export type CarUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  make: string
+  model: string
+  year: number
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
+  userId: string
+  problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutCarInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutCarInput
+}
+
+export type CarCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.CarWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarCreateWithoutDocumentsInput, Prisma.CarUncheckedCreateWithoutDocumentsInput>
+}
+
+export type CarUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.CarUpdateWithoutDocumentsInput, Prisma.CarUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.CarCreateWithoutDocumentsInput, Prisma.CarUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.CarWhereInput
+}
+
+export type CarUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.CarWhereInput
+  data: Prisma.XOR<Prisma.CarUpdateWithoutDocumentsInput, Prisma.CarUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type CarUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutCarsNestedInput
+  problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutCarNestedInput
+}
+
+export type CarUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCarNestedInput
 }
 
 export type CarCreateManyUserInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  brand: string
+  make: string
   model: string
-  price: number
   year: number
-  color: string
-  mileage: number
-  fuel: string
-  transmission: string
-  registration: string
-  status?: $Enums.CarProblemStatus
+  vin?: string | null
+  purchasePrice: number
+  purchaseDate: Date | string
+  currentMileage: number
+  nextInspectionDate: Date | string
+  nextServiceDate?: Date | string | null
+  imageUrl?: string | null
 }
 
 export type CarUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   problems?: Prisma.ProblemUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutCarNestedInput
 }
 
 export type CarUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutCarNestedInput
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutCarNestedInput
-  images?: Prisma.ImageUncheckedUpdateManyWithoutCarNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutCarNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutCarNestedInput
 }
 
 export type CarUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  make?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  color?: Prisma.StringFieldUpdateOperationsInput | string
-  mileage?: Prisma.IntFieldUpdateOperationsInput | number
-  fuel?: Prisma.StringFieldUpdateOperationsInput | string
-  transmission?: Prisma.StringFieldUpdateOperationsInput | string
-  registration?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCarProblemStatusFieldUpdateOperationsInput | $Enums.CarProblemStatus
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.IntFieldUpdateOperationsInput | number
+  purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentMileage?: Prisma.IntFieldUpdateOperationsInput | number
+  nextInspectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nextServiceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1137,14 +1141,14 @@ export type CarUncheckedUpdateManyWithoutUserInput = {
 
 export type CarCountOutputType = {
   problems: number
-  comments: number
-  images: number
+  expenses: number
+  documents: number
 }
 
 export type CarCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   problems?: boolean | CarCountOutputTypeCountProblemsArgs
-  comments?: boolean | CarCountOutputTypeCountCommentsArgs
-  images?: boolean | CarCountOutputTypeCountImagesArgs
+  expenses?: boolean | CarCountOutputTypeCountExpensesArgs
+  documents?: boolean | CarCountOutputTypeCountDocumentsArgs
 }
 
 /**
@@ -1167,15 +1171,15 @@ export type CarCountOutputTypeCountProblemsArgs<ExtArgs extends runtime.Types.Ex
 /**
  * CarCountOutputType without action
  */
-export type CarCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CommentWhereInput
+export type CarCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExpenseWhereInput
 }
 
 /**
  * CarCountOutputType without action
  */
-export type CarCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ImageWhereInput
+export type CarCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentWhereInput
 }
 
 
@@ -1183,21 +1187,21 @@ export type CarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  brand?: boolean
+  make?: boolean
   model?: boolean
-  price?: boolean
   year?: boolean
-  color?: boolean
-  mileage?: boolean
-  fuel?: boolean
-  transmission?: boolean
-  registration?: boolean
+  vin?: boolean
+  purchasePrice?: boolean
+  purchaseDate?: boolean
+  currentMileage?: boolean
+  nextInspectionDate?: boolean
+  nextServiceDate?: boolean
+  imageUrl?: boolean
   userId?: boolean
-  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problems?: boolean | Prisma.Car$problemsArgs<ExtArgs>
-  comments?: boolean | Prisma.Car$commentsArgs<ExtArgs>
-  images?: boolean | Prisma.Car$imagesArgs<ExtArgs>
+  expenses?: boolean | Prisma.Car$expensesArgs<ExtArgs>
+  documents?: boolean | Prisma.Car$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.CarCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
@@ -1205,17 +1209,17 @@ export type CarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  brand?: boolean
+  make?: boolean
   model?: boolean
-  price?: boolean
   year?: boolean
-  color?: boolean
-  mileage?: boolean
-  fuel?: boolean
-  transmission?: boolean
-  registration?: boolean
+  vin?: boolean
+  purchasePrice?: boolean
+  purchaseDate?: boolean
+  currentMileage?: boolean
+  nextInspectionDate?: boolean
+  nextServiceDate?: boolean
+  imageUrl?: boolean
   userId?: boolean
-  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
@@ -1223,17 +1227,17 @@ export type CarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  brand?: boolean
+  make?: boolean
   model?: boolean
-  price?: boolean
   year?: boolean
-  color?: boolean
-  mileage?: boolean
-  fuel?: boolean
-  transmission?: boolean
-  registration?: boolean
+  vin?: boolean
+  purchasePrice?: boolean
+  purchaseDate?: boolean
+  currentMileage?: boolean
+  nextInspectionDate?: boolean
+  nextServiceDate?: boolean
+  imageUrl?: boolean
   userId?: boolean
-  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
@@ -1241,25 +1245,25 @@ export type CarSelectScalar = {
   id?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  brand?: boolean
+  make?: boolean
   model?: boolean
-  price?: boolean
   year?: boolean
-  color?: boolean
-  mileage?: boolean
-  fuel?: boolean
-  transmission?: boolean
-  registration?: boolean
+  vin?: boolean
+  purchasePrice?: boolean
+  purchaseDate?: boolean
+  currentMileage?: boolean
+  nextInspectionDate?: boolean
+  nextServiceDate?: boolean
+  imageUrl?: boolean
   userId?: boolean
-  status?: boolean
 }
 
-export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "brand" | "model" | "price" | "year" | "color" | "mileage" | "fuel" | "transmission" | "registration" | "userId" | "status", ExtArgs["result"]["car"]>
+export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "make" | "model" | "year" | "vin" | "purchasePrice" | "purchaseDate" | "currentMileage" | "nextInspectionDate" | "nextServiceDate" | "imageUrl" | "userId", ExtArgs["result"]["car"]>
 export type CarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problems?: boolean | Prisma.Car$problemsArgs<ExtArgs>
-  comments?: boolean | Prisma.Car$commentsArgs<ExtArgs>
-  images?: boolean | Prisma.Car$imagesArgs<ExtArgs>
+  expenses?: boolean | Prisma.Car$expensesArgs<ExtArgs>
+  documents?: boolean | Prisma.Car$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.CarCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CarIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1274,24 +1278,24 @@ export type $CarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     problems: Prisma.$ProblemPayload<ExtArgs>[]
-    comments: Prisma.$CommentPayload<ExtArgs>[]
-    images: Prisma.$ImagePayload<ExtArgs>[]
+    expenses: Prisma.$ExpensePayload<ExtArgs>[]
+    documents: Prisma.$DocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     createdAt: Date
     updatedAt: Date
-    brand: string
+    make: string
     model: string
-    price: number
     year: number
-    color: string
-    mileage: number
-    fuel: string
-    transmission: string
-    registration: string
+    vin: string | null
+    purchasePrice: number
+    purchaseDate: Date
+    currentMileage: number
+    nextInspectionDate: Date
+    nextServiceDate: Date | null
+    imageUrl: string | null
     userId: string
-    status: $Enums.CarProblemStatus
   }, ExtArgs["result"]["car"]>
   composites: {}
 }
@@ -1688,8 +1692,8 @@ export interface Prisma__CarClient<T, Null = never, ExtArgs extends runtime.Type
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   problems<T extends Prisma.Car$problemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$problemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  comments<T extends Prisma.Car$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  images<T extends Prisma.Car$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  expenses<T extends Prisma.Car$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documents<T extends Prisma.Car$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1722,17 +1726,17 @@ export interface CarFieldRefs {
   readonly id: Prisma.FieldRef<"Car", 'String'>
   readonly createdAt: Prisma.FieldRef<"Car", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Car", 'DateTime'>
-  readonly brand: Prisma.FieldRef<"Car", 'String'>
+  readonly make: Prisma.FieldRef<"Car", 'String'>
   readonly model: Prisma.FieldRef<"Car", 'String'>
-  readonly price: Prisma.FieldRef<"Car", 'Int'>
   readonly year: Prisma.FieldRef<"Car", 'Int'>
-  readonly color: Prisma.FieldRef<"Car", 'String'>
-  readonly mileage: Prisma.FieldRef<"Car", 'Int'>
-  readonly fuel: Prisma.FieldRef<"Car", 'String'>
-  readonly transmission: Prisma.FieldRef<"Car", 'String'>
-  readonly registration: Prisma.FieldRef<"Car", 'String'>
+  readonly vin: Prisma.FieldRef<"Car", 'String'>
+  readonly purchasePrice: Prisma.FieldRef<"Car", 'Int'>
+  readonly purchaseDate: Prisma.FieldRef<"Car", 'DateTime'>
+  readonly currentMileage: Prisma.FieldRef<"Car", 'Int'>
+  readonly nextInspectionDate: Prisma.FieldRef<"Car", 'DateTime'>
+  readonly nextServiceDate: Prisma.FieldRef<"Car", 'DateTime'>
+  readonly imageUrl: Prisma.FieldRef<"Car", 'String'>
   readonly userId: Prisma.FieldRef<"Car", 'String'>
-  readonly status: Prisma.FieldRef<"Car", 'CarProblemStatus'>
 }
     
 
@@ -2151,51 +2155,51 @@ export type Car$problemsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Car.comments
+ * Car.expenses
  */
-export type Car$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Car$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Comment
+   * Select specific fields to fetch from the Expense
    */
-  select?: Prisma.CommentSelect<ExtArgs> | null
+  select?: Prisma.ExpenseSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Comment
+   * Omit specific fields from the Expense
    */
-  omit?: Prisma.CommentOmit<ExtArgs> | null
+  omit?: Prisma.ExpenseOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CommentInclude<ExtArgs> | null
-  where?: Prisma.CommentWhereInput
-  orderBy?: Prisma.CommentOrderByWithRelationInput | Prisma.CommentOrderByWithRelationInput[]
-  cursor?: Prisma.CommentWhereUniqueInput
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  where?: Prisma.ExpenseWhereInput
+  orderBy?: Prisma.ExpenseOrderByWithRelationInput | Prisma.ExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.ExpenseWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
+  distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[]
 }
 
 /**
- * Car.images
+ * Car.documents
  */
-export type Car$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Car$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Image
+   * Select specific fields to fetch from the Document
    */
-  select?: Prisma.ImageSelect<ExtArgs> | null
+  select?: Prisma.DocumentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Image
+   * Omit specific fields from the Document
    */
-  omit?: Prisma.ImageOmit<ExtArgs> | null
+  omit?: Prisma.DocumentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ImageInclude<ExtArgs> | null
-  where?: Prisma.ImageWhereInput
-  orderBy?: Prisma.ImageOrderByWithRelationInput | Prisma.ImageOrderByWithRelationInput[]
-  cursor?: Prisma.ImageWhereUniqueInput
+  include?: Prisma.DocumentInclude<ExtArgs> | null
+  where?: Prisma.DocumentWhereInput
+  orderBy?: Prisma.DocumentOrderByWithRelationInput | Prisma.DocumentOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ImageScalarFieldEnum | Prisma.ImageScalarFieldEnum[]
+  distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
 }
 
 /**

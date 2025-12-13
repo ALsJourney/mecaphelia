@@ -33,7 +33,7 @@ export * from "./enums"
  * const cars = await prisma.car.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
@@ -45,11 +45,6 @@ export { Prisma }
  */
 export type Car = Prisma.CarModel
 /**
- * Model Image
- * 
- */
-export type Image = Prisma.ImageModel
-/**
  * Model User
  * 
  */
@@ -60,22 +55,17 @@ export type User = Prisma.UserModel
  */
 export type Session = Prisma.SessionModel
 /**
- * Model Comment
- * 
- */
-export type Comment = Prisma.CommentModel
-/**
  * Model Problem
  * 
  */
 export type Problem = Prisma.ProblemModel
 /**
- * Model ProblemImage
+ * Model Expense
  * 
  */
-export type ProblemImage = Prisma.ProblemImageModel
+export type Expense = Prisma.ExpenseModel
 /**
- * Model CommentImage
+ * Model Document
  * 
  */
-export type CommentImage = Prisma.CommentImageModel
+export type Document = Prisma.DocumentModel

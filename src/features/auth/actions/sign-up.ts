@@ -11,7 +11,7 @@ import {
 import { hashPassword } from "@/features/password/utils/hash-and-verify";
 import { createSession } from "@/lib/lucia";
 import { prisma } from "@/lib/prisma";
-import { ticketsPath } from "@/path";
+import { dashboardPath } from "@/path";
 import { generateRandomToken } from "@/utils/crypto";
 
 import { setSessionCookie } from "../utils/session-cookie";
@@ -76,5 +76,5 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     return fromErrorToActionState(error, formData);
   }
 
-  redirect("/");
+  redirect(dashboardPath());
 };

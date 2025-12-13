@@ -1,5 +1,7 @@
 export const homePath = () => "/";
 
+export const dashboardPath = () => "/dashboard" as const;
+
 export const ticketsPath = () => "/tickets" as const;
 
 export const ticketPath = (ticketId: string) =>

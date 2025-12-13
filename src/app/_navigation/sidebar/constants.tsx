@@ -1,25 +1,23 @@
-import { LucideBook, LucideCircleUser, LucideLibrary } from "lucide-react";
-
-import { accountProfilePath } from "@/path";
+import { LayoutDashboard, Car, Settings } from "lucide-react";
 
 import { NavItem } from "./types";
 
 export const navItems: NavItem[] = [
   {
-    title: "All Tickets",
-    icon: <LucideLibrary />,
-    href: "/",
+    title: "Dashboard",
+    icon: <LayoutDashboard />,
+    href: "/dashboard",
   },
   {
-    title: "Tickets",
-    icon: <LucideBook />,
-    href: "/tickets",
+    title: "Meine Autos",
+    icon: <Car />,
+    href: "/cars",
   },
   {
     separator: true,
-    title: "Account",
-    icon: <LucideCircleUser />,
-    href: accountProfilePath(),
+    title: "Einstellungen",
+    icon: <Settings />,
+    href: "/settings",
   },
 ];
 
