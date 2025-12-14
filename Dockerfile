@@ -71,6 +71,6 @@ EXPOSE 3000
 
 RUN mkdir -p /app/src && chown -R node:node /app/src
 
-ENTRYPOINT [ "pnpm", "start" ]
+ENTRYPOINT [ "pnpm", "start", "-H", "0.0.0.0", "-p", "3000" ]
 
 USER node
