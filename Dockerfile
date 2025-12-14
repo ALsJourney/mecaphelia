@@ -21,7 +21,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
 COPY prisma.config.ts ./
-COPY src/database/cars.db ./src/database/cars.db # Copy the initial database file
+COPY src/database/cars.db ./src/database/cars.db 
 
 # Install dependencies. The native module (better-sqlite3) compiles here.
 RUN pnpm install --frozen-lockfile
@@ -30,7 +30,7 @@ RUN pnpm install --frozen-lockfile
 # This must happen before 'pnpm run build'
 RUN pnpm prisma generate 
 #RUN pnpm prisma db push --skip-generate --accept-data-loss # Force schema application
-RUN pnpm prisma db push --skip-generate
+RUN pnpm prisma db push
 
 # Copy the rest of the application files (source code)
 COPY . . 
@@ -60,7 +60,7 @@ COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/node_modules /app/node_modules
 COPY package.json next.config.ts ./
-COPY prisma ./prisma # Needed for the Prisma client to find the engines
+COPY prisma ./prisma
 
 # Copy the generated/migrated database file
 COPY --from=builder /app/src/database/cars.db ./src/database/cars.db 
