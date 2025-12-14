@@ -69,8 +69,8 @@ COPY prisma ./prisma
 
 EXPOSE 3000
 
-USER root
+RUN mkdir -p /app/src && chown -R node:node /app/src
 
-ENTRYPOINT [ "/bin/sh", "-c", "mkdir -p /app/src/database && chown -R 1000:1000 /app/src/database && exec pnpm start" ]
+ENTRYPOINT [ "pnpm", "start" ]
 
 USER node

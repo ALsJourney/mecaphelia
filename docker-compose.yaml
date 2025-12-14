@@ -21,7 +21,7 @@ services:
 
     volumes:
       # Map the named volume (defined below) to the directory inside the container
-      # where your SQLite database file (cars.db) lives.
+      # where your SQLite database file (cars.db) lives
       - db_data:/app/src/database
 
     # Strategy for updates: always restart unless explicitly stopped
