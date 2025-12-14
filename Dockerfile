@@ -75,6 +75,8 @@ RUN apk update && \
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+COPY --from=builder /app/prisma ./prisma
+
 # Copy production assets
 COPY --from=builder /app/public ./public
 
