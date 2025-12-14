@@ -21,7 +21,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
 COPY prisma.config.ts ./
-COPY src/database/cars.db ./src/database/cars.db 
+#COPY src/database/cars.db ./src/database/cars.db 
 
 # Install dependencies. The native module (better-sqlite3) compiles here.
 RUN pnpm install --frozen-lockfile
