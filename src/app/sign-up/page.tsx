@@ -6,7 +6,7 @@ import { signInPath } from "@/path";
 
 const SignUpPage = () => {
   return (
-      <div className="flex-1 flex flex-col justify-center items-center">
+      <div className="flex-1 flex flex-col justify-center items-center px-4">
         <CardCompact
           title="Sign Up"
           description="Create a new account"

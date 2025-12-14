@@ -43,6 +43,7 @@ model User {
   email        String    @unique
   passwordHash String
   openrouterApiKey String?
+  country      Country   @default(DEUTSCHLAND)
   session      Session[]
   cars         Car[]
   problems     Problem[]
@@ -84,6 +85,11 @@ enum ExpenseType {
   TUNING
   TAX_INSURANCE
   OTHER
+}
+
+enum Country {
+  DEUTSCHLAND
+  OESTERREICH
 }
 
 model Problem {

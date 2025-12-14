@@ -62,13 +62,16 @@ import {
   SeveritySource,
   ExpenseType,
   ExpenseTypeLabels,
+  Country,
+  CountryInspectionConfig,
 } from "../types";
 
 interface CarDetailContentProps {
   car: CarWithRelations;
+  country: Country;
 }
 
-export function CarDetailContent({ car }: CarDetailContentProps) {
+export function CarDetailContent({ car, country }: CarDetailContentProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isEditingCar, setIsEditingCar] = useState(false);
@@ -333,7 +336,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
   );
 
   return (
-    <div className="flex flex-col px-32">
+    <div className="flex flex-col px-4 sm:px-8 md:px-16 lg:px-32">
       <Dialog open={isEditingCar} onOpenChange={setIsEditingCar}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
@@ -382,7 +385,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
               />
             </div>
             <div className="col-span-2">
-              <Label>Nächstes Pickerl/TÜV</Label>
+              <Label>Nächstes {CountryInspectionConfig[country].label}</Label>
               <Input
                 type="date"
                 value={editForm.nextInspectionDate}
@@ -553,13 +556,13 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
         </DialogContent>
       </Dialog>
 
-      <div className="border-b pb-6 mb-6 flex justify-between items-start">
-        <div className="flex items-center gap-4">
+      <div className="border-b pb-6 mb-6 flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
           <Button variant="ghost" size="icon" onClick={() => router.push("/cars")}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div>
-            <h2 className="text-2xl font-bold flex items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2 sm:gap-3 flex-wrap">
               {car.make} {car.model}
               <button
                 onClick={() => setIsEditingCar(true)}
@@ -592,7 +595,8 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                   <AlertCircle className="h-3 w-3" />
                 )}
                 {inspectionUrgency === "ok" && <CheckCircle className="h-3 w-3" />}
-                TÜV: {new Date(car.nextInspectionDate).toLocaleDateString("de-DE")}
+                {CountryInspectionConfig[country].label}: {new Date(car.nextInspectionDate).toLocaleDateString("de-DE")}
+                {" "}(+{CountryInspectionConfig[country].gracePeriodMonths} Mon.)
               </span>
               {car.nextServiceDate && (
                 <span
@@ -612,7 +616,7 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
             </div>
           </div>
         </div>
-        <div className="text-right hidden md:block">
+        <div className="text-left sm:text-right w-full sm:w-auto">
           <p className="text-xs text-muted-foreground uppercase">
             Investiert (Gesamt)
           </p>
@@ -623,23 +627,23 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
       </div>
 
       <Tabs defaultValue="problems" className="w-full">
-        <TabsList className="mb-6">
-          <TabsTrigger value="problems">Probleme & Tickets</TabsTrigger>
-          <TabsTrigger value="expenses">Service & Kosten</TabsTrigger>
-          <TabsTrigger value="documents">Dokumente</TabsTrigger>
+        <TabsList className="mb-6 w-full sm:w-auto flex-wrap h-auto gap-1">
+          <TabsTrigger value="problems" className="flex-1 sm:flex-none text-xs sm:text-sm">Probleme</TabsTrigger>
+          <TabsTrigger value="expenses" className="flex-1 sm:flex-none text-xs sm:text-sm">Kosten</TabsTrigger>
+          <TabsTrigger value="documents" className="flex-1 sm:flex-none text-xs sm:text-sm">Dokumente</TabsTrigger>
         </TabsList>
 
         <TabsContent value="problems" className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h3 className="text-lg font-bold">Aktuelle Tickets</h3>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <Select
                 value={problemStatusFilter}
                 onValueChange={(v) =>
                   setProblemStatusFilter(v as ProblemStatus | "ALL")
                 }
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -851,19 +855,19 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
         </TabsContent>
 
         <TabsContent value="expenses" className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <h3 className="text-lg font-bold">Wartungs-Logbuch & Kosten</h3>
               <p className="text-sm text-muted-foreground">
                 Führe Buch über alle Reparaturen und Upgrades.
               </p>
             </div>
-            <Button onClick={() => setShowAddExpense(true)}>
+            <Button onClick={() => setShowAddExpense(true)} className="w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" /> Neuer Eintrag
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <Card>
               <CardContent className="p-4">
                 <p className="text-xs text-muted-foreground uppercase mb-1">
@@ -1046,14 +1050,14 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
         </TabsContent>
 
         <TabsContent value="documents" className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <h3 className="text-lg font-bold">Dokumente & Verträge</h3>
               <p className="text-sm text-muted-foreground">
                 Speichere Kaufverträge, Rechnungen und Genehmigungen.
               </p>
             </div>
-            <div>
+            <div className="w-full sm:w-auto">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -1061,13 +1065,13 @@ export function CarDetailContent({ car }: CarDetailContentProps) {
                 onChange={handleFileUpload}
                 accept="image/*,.pdf"
               />
-              <Button onClick={() => fileInputRef.current?.click()}>
+              <Button onClick={() => fileInputRef.current?.click()} className="w-full sm:w-auto">
                 <Upload className="mr-2 h-4 w-4" /> Upload
               </Button>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {car.documents.map((doc) => {
               const isImage = doc.fileType.startsWith("image/");
               return (

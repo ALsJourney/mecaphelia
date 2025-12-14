@@ -46,3 +46,11 @@ export const ExpenseType = {
 } as const
 
 export type ExpenseType = (typeof ExpenseType)[keyof typeof ExpenseType]
+
+
+export const Country = {
+  DEUTSCHLAND: 'DEUTSCHLAND',
+  OESTERREICH: 'OESTERREICH'
+} as const
+
+export type Country = (typeof Country)[keyof typeof Country]

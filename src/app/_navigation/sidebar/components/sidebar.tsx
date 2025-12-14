@@ -39,8 +39,9 @@ const Sidebar = () => {
       className={cn(
         "animate-sidebar-from-left absolute peer",
         "h-screen border-r pt-24",
+        "hidden md:block",
         isTransition && "duration-200",
-        isOpen ? "md:w-60 w-[78px]" : "w-[78px]",
+        isOpen ? "md:w-60" : "w-[78px]",
       )}
       onMouseEnter={() => handleToggle(true)}
       onMouseLeave={() => handleToggle(false)}

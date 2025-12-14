@@ -12,13 +12,14 @@ import {
 } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CarWithRelations, ProblemStatus } from "../types";
+import { CarWithRelations, ProblemStatus, Country, CountryInspectionConfig } from "../types";
 
 interface DashboardContentProps {
   cars: CarWithRelations[];
+  country: Country;
 }
 
-export function DashboardContent({ cars }: DashboardContentProps) {
+export function DashboardContent({ cars, country }: DashboardContentProps) {
   const totalValue = cars.reduce((acc, car) => acc + car.purchasePrice, 0);
 
   const totalSpent = cars.reduce((acc, car) => {
@@ -93,13 +94,13 @@ export function DashboardContent({ cars }: DashboardContentProps) {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       <div>
-        <h2 className="text-3xl font-bold mb-2">Übersicht</h2>
-        <p className="text-muted-foreground">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Übersicht</h2>
+        <p className="text-muted-foreground text-sm sm:text-base">
           Willkommen zurück. Hier ist der Status deiner Flotte.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase">
@@ -152,7 +153,7 @@ export function DashboardContent({ cars }: DashboardContentProps) {
         >
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase">
-              TÜV / Pickerl
+              {CountryInspectionConfig[country].label} (+{CountryInspectionConfig[country].gracePeriodMonths} Mon.)
             </CardTitle>
             <InspectionIcon
               className={`h-5 w-5 ${
@@ -221,13 +222,13 @@ export function DashboardContent({ cars }: DashboardContentProps) {
         <CardContent>
           <div className="h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} layout="vertical" margin={{ left: 20 }}>
+              <BarChart data={data} layout="vertical" margin={{ left: 10, right: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} />
                 <XAxis
                   type="number"
                   tickFormatter={(val) => `€${val}`}
                 />
-                <YAxis dataKey="name" type="category" width={120} />
+                <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 12 }} />
                 <Tooltip
                   formatter={(value: number) => `€${value.toLocaleString("de-DE")}`}
                 />

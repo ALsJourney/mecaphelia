@@ -30,6 +30,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   openrouterApiKey: string | null
+  country: $Enums.Country | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -38,6 +39,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   openrouterApiKey: string | null
+  country: $Enums.Country | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -46,6 +48,7 @@ export type UserCountAggregateOutputType = {
   email: number
   passwordHash: number
   openrouterApiKey: number
+  country: number
   _all: number
 }
 
@@ -56,6 +59,7 @@ export type UserMinAggregateInputType = {
   email?: true
   passwordHash?: true
   openrouterApiKey?: true
+  country?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -64,6 +68,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   passwordHash?: true
   openrouterApiKey?: true
+  country?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -72,6 +77,7 @@ export type UserCountAggregateInputType = {
   email?: true
   passwordHash?: true
   openrouterApiKey?: true
+  country?: true
   _all?: true
 }
 
@@ -153,6 +159,7 @@ export type UserGroupByOutputType = {
   email: string
   passwordHash: string
   openrouterApiKey: string | null
+  country: $Enums.Country
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -182,6 +189,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   openrouterApiKey?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.EnumCountryFilter<"User"> | $Enums.Country
   session?: Prisma.SessionListRelationFilter
   cars?: Prisma.CarListRelationFilter
   problems?: Prisma.ProblemListRelationFilter
@@ -195,6 +203,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   openrouterApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrder
   session?: Prisma.SessionOrderByRelationAggregateInput
   cars?: Prisma.CarOrderByRelationAggregateInput
   problems?: Prisma.ProblemOrderByRelationAggregateInput
@@ -211,6 +220,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringFilter<"User"> | string
   openrouterApiKey?: Prisma.StringNullableFilter<"User"> | string | null
+  country?: Prisma.EnumCountryFilter<"User"> | $Enums.Country
   session?: Prisma.SessionListRelationFilter
   cars?: Prisma.CarListRelationFilter
   problems?: Prisma.ProblemListRelationFilter
@@ -224,6 +234,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   openrouterApiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -238,6 +249,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   openrouterApiKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  country?: Prisma.EnumCountryWithAggregatesFilter<"User"> | $Enums.Country
 }
 
 export type UserCreateInput = {
@@ -246,6 +258,7 @@ export type UserCreateInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -259,6 +272,7 @@ export type UserUncheckedCreateInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -272,6 +286,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -285,6 +300,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -298,6 +314,7 @@ export type UserCreateManyInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
 }
 
 export type UserUpdateManyMutationInput = {
@@ -306,6 +323,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -314,6 +332,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
 }
 
 export type UserScalarRelationFilter = {
@@ -327,6 +346,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   openrouterApiKey?: Prisma.SortOrder
+  country?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -335,6 +355,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   openrouterApiKey?: Prisma.SortOrder
+  country?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -343,6 +364,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   openrouterApiKey?: Prisma.SortOrder
+  country?: Prisma.SortOrder
 }
 
 export type UserCreateNestedOneWithoutCarsInput = {
@@ -357,6 +379,10 @@ export type UserUpdateOneRequiredWithoutCarsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutCarsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCarsInput, Prisma.UserUpdateWithoutCarsInput>, Prisma.UserUncheckedUpdateWithoutCarsInput>
+}
+
+export type EnumCountryFieldUpdateOperationsInput = {
+  set?: $Enums.Country
 }
 
 export type UserCreateNestedOneWithoutSessionInput = {
@@ -421,6 +447,7 @@ export type UserCreateWithoutCarsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -433,6 +460,7 @@ export type UserUncheckedCreateWithoutCarsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -461,6 +489,7 @@ export type UserUpdateWithoutCarsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -473,6 +502,7 @@ export type UserUncheckedUpdateWithoutCarsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -485,6 +515,7 @@ export type UserCreateWithoutSessionInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -497,6 +528,7 @@ export type UserUncheckedCreateWithoutSessionInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -525,6 +557,7 @@ export type UserUpdateWithoutSessionInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -537,6 +570,7 @@ export type UserUncheckedUpdateWithoutSessionInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -549,6 +583,7 @@ export type UserCreateWithoutProblemsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -561,6 +596,7 @@ export type UserUncheckedCreateWithoutProblemsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -589,6 +625,7 @@ export type UserUpdateWithoutProblemsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -601,6 +638,7 @@ export type UserUncheckedUpdateWithoutProblemsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -613,6 +651,7 @@ export type UserCreateWithoutExpensesInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -625,6 +664,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -653,6 +693,7 @@ export type UserUpdateWithoutExpensesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -665,6 +706,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -677,6 +719,7 @@ export type UserCreateWithoutDocumentsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionCreateNestedManyWithoutUserInput
   cars?: Prisma.CarCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemCreateNestedManyWithoutUserInput
@@ -689,6 +732,7 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   email: string
   passwordHash: string
   openrouterApiKey?: string | null
+  country?: $Enums.Country
   session?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutUserInput
   problems?: Prisma.ProblemUncheckedCreateNestedManyWithoutUserInput
@@ -717,6 +761,7 @@ export type UserUpdateWithoutDocumentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUpdateManyWithoutUserNestedInput
@@ -729,6 +774,7 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   openrouterApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.EnumCountryFieldUpdateOperationsInput | $Enums.Country
   session?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   cars?: Prisma.CarUncheckedUpdateManyWithoutUserNestedInput
   problems?: Prisma.ProblemUncheckedUpdateManyWithoutUserNestedInput
@@ -808,6 +854,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   passwordHash?: boolean
   openrouterApiKey?: boolean
+  country?: boolean
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
   cars?: boolean | Prisma.User$carsArgs<ExtArgs>
   problems?: boolean | Prisma.User$problemsArgs<ExtArgs>
@@ -822,6 +869,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   openrouterApiKey?: boolean
+  country?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -830,6 +878,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   openrouterApiKey?: boolean
+  country?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -838,9 +887,10 @@ export type UserSelectScalar = {
   email?: boolean
   passwordHash?: boolean
   openrouterApiKey?: boolean
+  country?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "openrouterApiKey", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "openrouterApiKey" | "country", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
   cars?: boolean | Prisma.User$carsArgs<ExtArgs>
@@ -867,6 +917,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     passwordHash: string
     openrouterApiKey: string | null
+    country: $Enums.Country
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1300,6 +1351,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly openrouterApiKey: Prisma.FieldRef<"User", 'String'>
+  readonly country: Prisma.FieldRef<"User", 'Country'>
 }
     
 

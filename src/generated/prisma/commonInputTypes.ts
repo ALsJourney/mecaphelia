@@ -158,6 +158,23 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumCountryFilter<$PrismaModel = never> = {
+  equals?: $Enums.Country | Prisma.EnumCountryFieldRefInput<$PrismaModel>
+  in?: $Enums.Country[]
+  notIn?: $Enums.Country[]
+  not?: Prisma.NestedEnumCountryFilter<$PrismaModel> | $Enums.Country
+}
+
+export type EnumCountryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Country | Prisma.EnumCountryFieldRefInput<$PrismaModel>
+  in?: $Enums.Country[]
+  notIn?: $Enums.Country[]
+  not?: Prisma.NestedEnumCountryWithAggregatesFilter<$PrismaModel> | $Enums.Country
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCountryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCountryFilter<$PrismaModel>
+}
+
 export type EnumProblemStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ProblemStatus | Prisma.EnumProblemStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ProblemStatus[]
@@ -429,6 +446,23 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumCountryFilter<$PrismaModel = never> = {
+  equals?: $Enums.Country | Prisma.EnumCountryFieldRefInput<$PrismaModel>
+  in?: $Enums.Country[]
+  notIn?: $Enums.Country[]
+  not?: Prisma.NestedEnumCountryFilter<$PrismaModel> | $Enums.Country
+}
+
+export type NestedEnumCountryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Country | Prisma.EnumCountryFieldRefInput<$PrismaModel>
+  in?: $Enums.Country[]
+  notIn?: $Enums.Country[]
+  not?: Prisma.NestedEnumCountryWithAggregatesFilter<$PrismaModel> | $Enums.Country
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCountryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCountryFilter<$PrismaModel>
 }
 
 export type NestedEnumProblemStatusFilter<$PrismaModel = never> = {

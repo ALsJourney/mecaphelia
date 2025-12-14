@@ -38,8 +38,9 @@ export default async function RootLayout({
               <Sidebar />
               <main
                 className={cn(
-                  "duration-200 pl-[78px] peer-hover:pl-[240px] min-h-screen flex-1 overflow-y-auto overflow-x-hidden bg-secondary/20 flex flex-col",
-                  isAuthenticated && "py-24 px-8",
+                  "duration-200 min-h-screen flex-1 overflow-y-auto overflow-x-hidden bg-secondary/20 flex flex-col",
+                  isAuthenticated && "py-24 px-4 md:px-8 md:pl-[78px] md:peer-hover:pl-[240px]",
+                  !isAuthenticated && "",
                 )}
               >
                 {children}

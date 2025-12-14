@@ -97,7 +97,8 @@ export const UserScalarFieldEnum = {
   username: 'username',
   email: 'email',
   passwordHash: 'passwordHash',
-  openrouterApiKey: 'openrouterApiKey'
+  openrouterApiKey: 'openrouterApiKey',
+  country: 'country'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

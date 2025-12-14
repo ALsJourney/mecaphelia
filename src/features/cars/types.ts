@@ -118,3 +118,20 @@ export const ExpenseTypeLabels: Record<ExpenseType, string> = {
 };
 
 export type ViewState = "DASHBOARD" | "CARS_LIST" | "CAR_DETAIL" | "SETTINGS";
+
+export const Country = {
+  DEUTSCHLAND: "DEUTSCHLAND",
+  OESTERREICH: "OESTERREICH",
+} as const;
+
+export type Country = (typeof Country)[keyof typeof Country];
+
+export const CountryLabels: Record<Country, string> = {
+  DEUTSCHLAND: "Deutschland",
+  OESTERREICH: "Österreich",
+};
+
+export const CountryInspectionConfig: Record<Country, { label: string; gracePeriodMonths: number }> = {
+  DEUTSCHLAND: { label: "TÜV", gracePeriodMonths: 1 },
+  OESTERREICH: { label: "Pickerl", gracePeriodMonths: 4 },
+};
