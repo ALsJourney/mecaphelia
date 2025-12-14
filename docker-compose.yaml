@@ -8,10 +8,6 @@ services:
     # Optional: Name your service 
     container_name: mecaphelia
     
-    # Map the application port 
-    ports:
-      - "3000:3000"
-      
     # Environment variables (Coolify handles these, but good practice)
     environment:
       # Ensure this matches the internal path in your Dockerfile and code
