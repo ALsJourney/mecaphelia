@@ -69,17 +69,8 @@ COPY prisma ./prisma
 
 EXPOSE 3000
 
-# *** CRITICAL PERSISTENCE FIXES BELOW ***
+USER root
 
-# 1. Switch to a non-root user ('node' is the default non-root user in this base image)
+ENTRYPOINT [ "/bin/sh", "-c", "mkdir -p /app/src/database && chown -R 1000:1000 /app/src/database && exec pnpm start" ]
+
 USER node
-
-# 2. Use ENTRYPOINT/CMD to first fix permissions on the mounted volume directory,
-#    and then start the application. This ensures the 'node' user can write the DB file.
-ENTRYPOINT [ "/bin/sh", "-c" ]
-CMD [ \
-  "mkdir -p /app/src/database && chown -R node:node /app/src/database && pnpm start" \
-]
-
-# Note: The 'mkdir -p' is a safety net in case the volume mount is slightly delayed
-# or only mounts the parent directory, though /app/src/database should be the mount point.
