@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  app:
+    # Use the image built by Coolify from your Dockerfile
+    build: . 
+    
+    # Optional: Name your service 
+    container_name: mecaphelia
+    
+    # Map the application port 
+    ports:
+      - "3000:3000"
+      
+    # Environment variables (Coolify handles these, but good practice)
+    environment:
+      # Ensure this matches the internal path in your Dockerfile and code
+      - DATABASE_URL=file:/app/src/database/cars.db
+      - NODE_ENV=production
+      - PORT=3000
+
+    volumes:
+      # Map the named volume (defined below) to the directory inside the container
+      # where your SQLite database file (cars.db) lives.
+      - db_data:/app/src/database
+
+    # Strategy for updates: always restart unless explicitly stopped
+    restart: always
+
+# Define the persistent volume
+volumes:
+  # This named volume will be stored by the Docker host (Coolify's server).
+  # When the service is updated, the new container mounts the SAME volume, 
+  # preserving the cars.db file.
+  db_data:
+    name: ${COOLIFY_PROJECT_ID}-app-db-data

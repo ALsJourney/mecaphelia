@@ -1,10 +1,14 @@
+# ----------------------------------------------------
 # Stage 1: The Build Stage
+# Purpose: Compiles the Next.js application and generates Prisma assets.
+# ----------------------------------------------------
 FROM node:20 AS builder 
 
-# Install pnpm globally in the builder image
+# Install pnpm globally
 RUN npm install -g pnpm
 
-# Install build essentials and SQLite system libraries for better-sqlite3
+# Install build essentials and SQLite system libraries (libsqlite3-dev) 
+# needed for 'better-sqlite3' to compile correctly.
 RUN apt-get update \
     && apt-get install -y \
         build-essential \
@@ -13,39 +17,44 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV production
+# Disable Next.js telemetry during the build
 ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /app
 
-# Copy the core configuration files needed for installation/generation/db setup
+# Copy lock files and Prisma configuration first to leverage Docker layer caching
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
 COPY prisma.config.ts ./
-#COPY src/database/cars.db ./src/database/cars.db 
+# NOTE: We DO NOT copy an existing database file here.
 
 # Install dependencies. The native module (better-sqlite3) compiles here.
 RUN pnpm install --frozen-lockfile
 
-# CRITICAL STEP: Generate Prisma Client and Initialize SQLite Database
-# This must happen before 'pnpm run build'
+# CRITICAL STEP: Generate Prisma Client and apply the schema (migration).
+# This prepares the application for the first run, where the database file
+# will be created in the mounted volume.
 RUN pnpm prisma generate 
-#RUN pnpm prisma db push --skip-generate --accept-data-loss # Force schema application
-RUN pnpm prisma db push
+RUN pnpm prisma db push # Applies the schema
 
 # Copy the rest of the application files (source code)
 COPY . . 
 
-# Run the Next.js build command using pnpm
+# Run the Next.js build command
 RUN pnpm run build
 
 # ----------------------------------------------------
 # Stage 2: The Production/Runner Stage
+# Purpose: The minimal image to run the compiled application.
+# ----------------------------------------------------
 FROM node:20 AS runner
 
-# Install pnpm globally in the runner image
+# Install pnpm globally
 RUN npm install -g pnpm
 
-# CRITICAL FIX: Install the SQLite runtime library in the final image
+# CRITICAL FIX: Install the SQLite *runtime* library in the final image.
+# This is necessary for the application to interact with the database file
+# mounted via a volume.
 RUN apt-get update && \
     apt-get install -y sqlite3 && \
     rm -rf /var/lib/apt/lists/*
@@ -62,8 +71,10 @@ COPY --from=builder /app/node_modules /app/node_modules
 COPY package.json next.config.ts ./
 COPY prisma ./prisma
 
-# Copy the generated/migrated database file
-COPY --from=builder /app/src/database/cars.db ./src/database/cars.db 
+# *** KEY CHANGE FOR PERSISTENCE ***
+# We DO NOT copy the /app/src/database/cars.db file from the builder stage.
+# The database will be created/read from a Docker Volume mounted by the user
+# at the location specified in your DATABASE_URL (e.g., /app/src/database/).
 
 EXPOSE 3000
 
