@@ -20,6 +20,8 @@ services:
       # where your SQLite database file (cars.db) lives
       - db_data:/app/src/database
 
+    labels:
+      - 'traefik.http.services.app.loadbalancer.server.port=3000'
     # Strategy for updates: always restart unless explicitly stopped
     restart: always
 
