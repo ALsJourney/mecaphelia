@@ -1,76 +1,95 @@
+# syntax=docker.io/docker/dockerfile:1
+
 # ----------------------------------------------------
-# Stage 1: The Build Stage
-# Purpose: Compiles the Next.js application and generates Prisma assets.
+# Base Stage
 # ----------------------------------------------------
-FROM node:20 AS builder 
+FROM node:20-alpine AS base
 
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Install build essentials and SQLite system libraries (libsqlite3-dev) 
-# needed for 'better-sqlite3' to compile correctly.
-RUN apt-get update \
-    && apt-get install -y \
-        build-essential \
-        python3 \
-        libsqlite3-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV NODE_ENV production
-# Disable Next.js telemetry during the build
-ENV NEXT_TELEMETRY_DISABLED 1
+# Install dependencies only when needed
+# ----------------------------------------------------
+# Stage 1: Dependencies Stage (deps)
+# Purpose: Install node modules including Prisma binary dependencies.
+# ----------------------------------------------------
+FROM base AS deps
+# For node-alpine compatibility
+RUN apk add --no-cache libc6-compat
+# Install essential build packages needed for native modules like better-sqlite3
+# We are using alpine, so we use `apk add` instead of `apt-get install`
+# Packages: build-base (replaces build-essential), python3, sqlite-dev (replaces libsqlite3-dev)
+RUN apk add --no-cache build-base python3 sqlite-dev
 
 WORKDIR /app
 
-# Copy lock files and Prisma configuration first to leverage Docker layer caching
-COPY package.json pnpm-lock.yaml ./
+# Install dependencies based on the preferred package manager (pnpm in your case)
+COPY package.json pnpm-lock.yaml* .npmrc* ./
 COPY prisma ./prisma
+
+# Enable pnpm via corepack and install dependencies
+RUN corepack enable pnpm && pnpm i --frozen-lockfile
+
+# ----------------------------------------------------
+# Stage 2: Builder Stage (builder)
+# Purpose: Build the Next.js application, generate Prisma client, and apply schema.
+# ----------------------------------------------------
+FROM base AS builder
+WORKDIR /app
+# Copy installed dependencies
+COPY --from=deps /app/node_modules ./node_modules
+# Copy source code and config
+COPY . .
+# Copy Prisma schema and config from the deps stage
+COPY --from=deps /app/prisma ./prisma
 COPY prisma.config.ts ./
-# NOTE: We DO NOT copy an existing database file here.
 
-# Install dependencies. The native module (better-sqlite3) compiles here.
-RUN pnpm install --frozen-lockfile
+# Next.js telemetry is often disabled during build for CI/CD consistency
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
-# CRITICAL STEP: Generate Prisma Client and apply the schema (migration).
-# This prepares the application for the first run, where the database file
-# will be created in the mounted volume.
-RUN pnpm prisma generate 
-RUN pnpm prisma db push # Applies the schema
+# CRITICAL STEP: Generate Prisma Client and apply the schema (migration/db push).
+# We assume the database (e.g., SQLite file) will be mounted externally
+# in the runner stage. The generate step is essential here.
+RUN corepack enable pnpm && \
+    pnpm prisma generate && \
+    pnpm prisma db push
 
-# Copy the rest of the application files (source code)
-COPY . . 
-
-# Run the Next.js build command
+# Run the Next.js build command which creates the .next/standalone directory
 RUN pnpm run build
+
 # ----------------------------------------------------
-# Stage 2: The Production/Runner Stage
+# Stage 3: Production/Runner Stage (runner)
+# Purpose: The minimal, production-ready image.
 # ----------------------------------------------------
-FROM node:20 AS runner
-
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# CRITICAL FIX: Install the SQLite *runtime* library
-RUN apt-get update && \
-    apt-get install -y sqlite3 && \
-    rm -rf /var/lib/apt/lists/*
-
-ENV NODE_ENV production
-ENV PORT 3000
-
+FROM base AS runner
 WORKDIR /app
 
-# Copy production assets and necessary files
-COPY --from=builder /app/.next /app/.next
-COPY --from=builder /app/public /app/public
-COPY --from=builder /app/node_modules /app/node_modules
-COPY package.json next.config.ts ./
-COPY prisma ./prisma
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+# CRITICAL FIX: Install the SQLite *runtime* library (needed to run better-sqlite3)
+# For alpine, this is the 'sqlite' package.
+RUN apk update && \
+    apk add --no-cache sqlite
+
+# Create a non-root user for security (as in the Vercel suggestion)
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy production assets
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size (Standalone Output)
+# The Next.js standalone output includes node_modules and all necessary files.
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Set the correct working user
+USER nextjs
 
 EXPOSE 3000
 
-RUN mkdir -p /app/src && chown -R node:node /app/src
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-ENTRYPOINT [ "pnpm", "start", "-H", "0.0.0.0", "-p", "3000" ]
-
-USER node
+# server.js is created by next build from the standalone output
+CMD ["node", "server.js"]
