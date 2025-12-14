@@ -42,19 +42,15 @@ COPY . .
 
 # Run the Next.js build command
 RUN pnpm run build
-
 # ----------------------------------------------------
 # Stage 2: The Production/Runner Stage
-# Purpose: The minimal image to run the compiled application.
 # ----------------------------------------------------
 FROM node:20 AS runner
 
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# CRITICAL FIX: Install the SQLite *runtime* library in the final image.
-# This is necessary for the application to interact with the database file
-# mounted via a volume.
+# CRITICAL FIX: Install the SQLite *runtime* library
 RUN apt-get update && \
     apt-get install -y sqlite3 && \
     rm -rf /var/lib/apt/lists/*
@@ -64,19 +60,26 @@ ENV PORT 3000
 
 WORKDIR /app
 
-# Copy production assets and necessary files from the build stage:
+# Copy production assets and necessary files
 COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/node_modules /app/node_modules
 COPY package.json next.config.ts ./
 COPY prisma ./prisma
 
-# *** KEY CHANGE FOR PERSISTENCE ***
-# We DO NOT copy the /app/src/database/cars.db file from the builder stage.
-# The database will be created/read from a Docker Volume mounted by the user
-# at the location specified in your DATABASE_URL (e.g., /app/src/database/).
-
 EXPOSE 3000
 
-# Define the command to start the Next.js production server
-CMD ["pnpm", "start"]
+# *** CRITICAL PERSISTENCE FIXES BELOW ***
+
+# 1. Switch to a non-root user ('node' is the default non-root user in this base image)
+USER node
+
+# 2. Use ENTRYPOINT/CMD to first fix permissions on the mounted volume directory,
+#    and then start the application. This ensures the 'node' user can write the DB file.
+ENTRYPOINT [ "/bin/sh", "-c" ]
+CMD [ \
+  "mkdir -p /app/src/database && chown -R node:node /app/src/database && pnpm start" \
+]
+
+# Note: The 'mkdir -p' is a safety net in case the volume mount is slightly delayed
+# or only mounts the parent directory, though /app/src/database should be the mount point.
