@@ -87,13 +87,10 @@ RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
 
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./
-COPY --from=builder /app/package.json ./
 
-# Copy Prisma CLI and generated client for database initialization
-COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/src/generated ./src/generated
+# Copy the initialized database template from build stage
+# This contains the schema but no data - used as template for new databases
+COPY --from=builder --chown=nextjs:nodejs /app/data/cars.db /app/data/cars.db.template
 
 # Copy production assets
 COPY --from=builder /app/public ./public
