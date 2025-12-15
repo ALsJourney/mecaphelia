@@ -29,7 +29,7 @@ RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 # ----------------------------------------------------
 # Stage 2: Builder Stage (builder)
-# Purpose: Build the Next.js application, generate Prisma client, and apply schema.
+# Purpose: Build the Next.js application, generate Prisma client.
 # ----------------------------------------------------
 FROM base AS builder
 WORKDIR /app
@@ -45,12 +45,11 @@ COPY prisma.config.ts ./
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# CRITICAL STEP: Generate Prisma Client and apply the schema (migration/db push).
-# We assume the database (e.g., SQLite file) will be mounted externally
-# in the runner stage. The generate step is essential here.
-RUN corepack enable pnpm && \
-    pnpm prisma generate && \
-    pnpm prisma db push
+# Set a temporary DATABASE_URL for build time (Prisma generate needs it)
+ENV DATABASE_URL="file:/app/data/cars.db"
+
+# Generate Prisma Client only - db push will happen at runtime
+RUN corepack enable pnpm && pnpm prisma generate
 
 # Run the Next.js build command which creates the .next/standalone directory
 RUN pnpm run build
@@ -66,6 +65,9 @@ ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
+# Set the database URL to use persistent volume path
+ENV DATABASE_URL="file:/app/data/cars.db"
+
 # CRITICAL FIX: Install the SQLite *runtime* library (needed to run better-sqlite3)
 # For alpine, this is the 'sqlite' package.
 RUN apk update && \
@@ -75,7 +77,18 @@ RUN apk update && \
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Create data directory for SQLite database with proper permissions
+RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.ts ./
+COPY --from=builder /app/package.json ./
+
+# Copy Prisma CLI and generated client for database initialization
+COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/src/generated ./src/generated
 
 # Copy production assets
 COPY --from=builder /app/public ./public
@@ -85,13 +98,21 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy entrypoint script
+COPY --chown=nextjs:nodejs docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
+
 # Set the correct working user
 USER nextjs
+
+# Declare volume for persistent database storage
+VOLUME ["/app/data"]
 
 EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# server.js is created by next build from the standalone output
+# Use entrypoint to initialize database, then run server
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["node", "server.js"]
