@@ -45,11 +45,16 @@ COPY prisma.config.ts ./
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Set a temporary DATABASE_URL for build time (Prisma generate needs it)
+# Set a temporary DATABASE_URL for build time
+# This creates a temp db in the build container for Next.js static generation
 ENV DATABASE_URL="file:/app/data/cars.db"
 
-# Generate Prisma Client only - db push will happen at runtime
-RUN corepack enable pnpm && pnpm prisma generate
+# Create data directory and initialize temp database for build
+# Next.js needs a working database during build for server components
+RUN mkdir -p /app/data && \
+    corepack enable pnpm && \
+    pnpm prisma generate && \
+    pnpm prisma db push
 
 # Run the Next.js build command which creates the .next/standalone directory
 RUN pnpm run build
