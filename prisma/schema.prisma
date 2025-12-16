@@ -104,6 +104,7 @@ model Problem {
   severitySource SeveritySource @default(AI)
   estimatedCost Int?
   aiAnalysis    String?
+  imageUrl      String?
   carId         String
   car           Car             @relation(fields: [carId], references: [id], onDelete: Cascade)
   userId        String
@@ -121,6 +122,7 @@ model Expense {
   amount      Int
   date        DateTime
   type        ExpenseType @default(MAINTENANCE)
+  imageUrl    String?
   carId       String
   car         Car         @relation(fields: [carId], references: [id], onDelete: Cascade)
   userId      String

@@ -42,6 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 import { updateCar } from "../actions/car-actions";
 import {
@@ -100,11 +101,13 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
     description: string;
     status: ProblemStatus;
     severity: ProblemSeverity;
+    imageUrl: string | null;
   }>({
     title: "",
     description: "",
     status: ProblemStatus.OPEN,
     severity: ProblemSeverity.MEDIUM,
+    imageUrl: null,
   });
 
   const [editForm, setEditForm] = useState({
@@ -118,16 +121,19 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
       ? car.nextServiceDate.toISOString().split("T")[0]
       : "",
     purchasePrice: car.purchasePrice / 100,
+    imageUrl: car.imageUrl,
   });
 
   const [newProblemTitle, setNewProblemTitle] = useState("");
   const [newProblemDesc, setNewProblemDesc] = useState("");
+  const [newProblemImage, setNewProblemImage] = useState<string | null>(null);
 
   const [newExpenseDesc, setNewExpenseDesc] = useState("");
   const [newExpenseAmount, setNewExpenseAmount] = useState(0);
   const [newExpenseType, setNewExpenseType] = useState<ExpenseType>(
     ExpenseType.MAINTENANCE
   );
+  const [newExpenseImage, setNewExpenseImage] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -144,6 +150,7 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
           ? new Date(editForm.nextServiceDate)
           : null,
         purchasePrice: Math.round(editForm.purchasePrice * 100),
+        imageUrl: editForm.imageUrl || undefined,
       });
       setIsEditingCar(false);
       router.refresh();
@@ -158,9 +165,11 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
       await createProblem(car.id, {
         title: newProblemTitle,
         description: newProblemDesc,
+        imageUrl: newProblemImage || undefined,
       });
       setNewProblemTitle("");
       setNewProblemDesc("");
+      setNewProblemImage(null);
       setIsAnalyzing(false);
       setShowAddProblem(false);
       router.refresh();
@@ -196,6 +205,7 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
       description: problem.description,
       status: problem.status,
       severity: problem.severity,
+      imageUrl: problem.imageUrl,
     });
     setIsEditingProblem(true);
   };
@@ -215,6 +225,7 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
         description: problemEditForm.description,
         status: problemEditForm.status,
         ...(severityToSave ? { severity: severityToSave } : {}),
+        imageUrl: problemEditForm.imageUrl,
       });
       setIsEditingProblem(false);
       setEditingProblemId(null);
@@ -245,9 +256,11 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
         description: newExpenseDesc || ExpenseTypeLabels[newExpenseType],
         amount: newExpenseAmount,
         type: newExpenseType,
+        imageUrl: newExpenseImage || undefined,
       });
       setNewExpenseAmount(0);
       setNewExpenseDesc("");
+      setNewExpenseImage(null);
       setShowAddExpense(false);
       router.refresh();
     });
@@ -429,6 +442,14 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                 }
               />
             </div>
+            <div className="col-span-2">
+              <Label>Fahrzeugbild</Label>
+              <ImageUpload
+                value={editForm.imageUrl}
+                onChange={(url) => setEditForm({ ...editForm, imageUrl: url })}
+                disabled={isPending}
+              />
+            </div>
           </div>
           <div className="flex justify-end gap-3 mt-4">
             <Button variant="ghost" onClick={() => setIsEditingCar(false)}>
@@ -540,6 +561,17 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                     ` (KI-Vorschlag: ${editingProblemAiSeverity})`}
                 </p>
               )}
+            </div>
+
+            <div>
+              <Label>Bild (optional)</Label>
+              <ImageUpload
+                value={problemEditForm.imageUrl}
+                onChange={(url) =>
+                  setProblemEditForm({ ...problemEditForm, imageUrl: url })
+                }
+                disabled={isPending}
+              />
             </div>
           </div>
           <div className="flex justify-end gap-3 mt-4">
@@ -684,6 +716,14 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                       rows={4}
                     />
                   </div>
+                  <div>
+                    <Label>Bild (optional)</Label>
+                    <ImageUpload
+                      value={newProblemImage}
+                      onChange={setNewProblemImage}
+                      disabled={isAnalyzing || isPending}
+                    />
+                  </div>
                   <div className="flex justify-end gap-2">
                     <Button
                       variant="ghost"
@@ -758,6 +798,17 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                     <p className="text-sm text-muted-foreground">
                       {problem.description}
                     </p>
+
+                    {problem.imageUrl && (
+                      <div className="mt-3">
+                        <img
+                          src={problem.imageUrl}
+                          alt="Problem"
+                          className="max-w-xs rounded-md border cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => window.open(problem.imageUrl!, "_blank")}
+                        />
+                      </div>
+                    )}
 
                     {problem.aiAnalysis && (
                       <div className="bg-muted/50 border rounded p-3 mt-3">
@@ -963,6 +1014,14 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                       placeholder="z.B. Ölwechsel 5W-30, Ölfilter, Luftfilter getauscht"
                     />
                   </div>
+                  <div className="md:col-span-2">
+                    <Label>Beleg/Rechnung (optional)</Label>
+                    <ImageUpload
+                      value={newExpenseImage}
+                      onChange={setNewExpenseImage}
+                      disabled={isPending}
+                    />
+                  </div>
                 </div>
                 <div className="flex justify-end gap-2 pt-4">
                   <Button
@@ -1017,7 +1076,18 @@ export function CarDetailContent({ car, country }: CarDetailContentProps) {
                         {new Date(expense.date).toLocaleDateString("de-DE")}
                       </td>
                       <td className="px-6 py-4 font-medium">
-                        {expense.description}
+                        <div className="flex items-center gap-2">
+                          {expense.description}
+                          {expense.imageUrl && (
+                            <button
+                              onClick={() => window.open(expense.imageUrl!, "_blank")}
+                              className="text-muted-foreground hover:text-foreground transition-colors"
+                              title="Beleg anzeigen"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </button>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-right font-mono">
                         €{(expense.amount / 100).toFixed(2)}

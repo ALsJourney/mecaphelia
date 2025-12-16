@@ -45,6 +45,7 @@ export interface Problem {
   severitySource: SeveritySource;
   estimatedCost: number | null;
   aiAnalysis: string | null;
+  imageUrl: string | null;
   carId: string;
   userId: string;
 }
@@ -57,6 +58,7 @@ export interface Expense {
   amount: number;
   date: Date;
   type: ExpenseType;
+  imageUrl: string | null;
   carId: string;
   userId: string;
 }

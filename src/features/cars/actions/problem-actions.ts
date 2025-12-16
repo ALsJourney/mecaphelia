@@ -12,6 +12,7 @@ export async function createProblem(
   data: {
     title: string;
     description: string;
+    imageUrl?: string;
   }
 ) {
   const { user } = await getAuth();
@@ -51,6 +52,7 @@ export async function createProblem(
       severitySource: SeveritySource.AI,
       estimatedCost: aiResult.estimatedCost,
       aiAnalysis: aiResult.analysis || null,
+      imageUrl: data.imageUrl || null,
       carId,
       userId: user.id,
     },
@@ -106,6 +108,7 @@ export async function updateProblem(
     description: string;
     status?: ProblemStatus;
     severity?: ProblemSeverity;
+    imageUrl?: string | null;
   }
 ) {
   const { user } = await getAuth();
@@ -129,6 +132,7 @@ export async function updateProblem(
             severitySource: SeveritySource.USER,
           }
         : {}),
+      ...(data.imageUrl !== undefined ? { imageUrl: data.imageUrl } : {}),
     },
   });
 

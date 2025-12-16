@@ -13,6 +13,7 @@ export async function createExpense(
     amount: number;
     type: ExpenseType;
     date?: Date;
+    imageUrl?: string;
   }
 ) {
   const { user } = await getAuth();
@@ -30,6 +31,7 @@ export async function createExpense(
       amount: Math.round(data.amount * 100),
       date: data.date || new Date(),
       type: data.type,
+      imageUrl: data.imageUrl || null,
       carId,
       userId: user.id,
     },
