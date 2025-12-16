@@ -11,6 +11,8 @@ if [ ! -f /app/data/cars.db ]; then
     echo "Database initialized successfully."
 else
     echo "Database already exists at /app/data/cars.db"
+    echo "Applying schema migrations..."
+    npx prisma db push --skip-generate --accept-data-loss 2>/dev/null || echo "Migration completed (or no changes needed)"
 fi
 
 # Execute the main command

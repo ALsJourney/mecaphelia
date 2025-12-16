@@ -92,6 +92,11 @@ COPY --from=builder /app/prisma.config.ts ./
 # This contains the schema but no data - used as template for new databases
 COPY --from=builder --chown=nextjs:nodejs /app/data/cars.db /app/data/cars.db.template
 
+# Copy Prisma CLI for runtime migrations
+COPY --from=builder /app/node_modules/.pnpm ./node_modules/.pnpm
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
 # Copy production assets
 COPY --from=builder /app/public ./public
 
