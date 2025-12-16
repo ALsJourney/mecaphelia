@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import localFont from 'next/font/local'
 
 export const metadata: Metadata = {
-  title: "The Road Next",
-  description: "My Road to Next Appliaction...",
+  title: "Mecaphelia",
+  description: "Digitaler Fuhrpark",
 };
 
 const font = localFont({
